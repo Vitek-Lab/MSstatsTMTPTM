@@ -1,0 +1,14 @@
+Type: Package
+Package: MSstatsTMTPTM
+Title: MSstatsTMTPTM
+Version: 0.0.1
+Date: 2020-08-11
+Authors: Devon Kohler <kohler.d@northestern.edu>
+Maintainer: Devon Kohler <kohler.d@northestern.edu>
+Description: Worflow for analyzing and modeling post-translational modification (PTM) proteomics data generated via tandem mass tag (TMT)
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
