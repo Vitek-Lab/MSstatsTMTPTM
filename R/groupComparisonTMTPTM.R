@@ -1,8 +1,3 @@
-
-library(tidyverse)
-library(MSstatsTMT)
-library(MSstatsPTM)
-
 #' Model PTM and/or protein data and make adjustments if needed
 #'
 #' Takes summarized PTM data from proteinSummarization and models with
