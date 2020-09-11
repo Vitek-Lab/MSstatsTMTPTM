@@ -10,7 +10,7 @@
 #' @import dplyr
 #' @importFrom MSstatsTMT groupComparisonTMT
 #' @importFrom MSstatsPTM adjustProteinLevel
-#' @param data PTM dataset returned by the proteinSummarization function
+#' @param data Name of the output of proteinSummarization function with PTM data. It should have columns named `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
 #' @param protein Protein dataset returned by the proteinSummarization function
 #' @param contrast.matrix Comparison between conditions of interests.
 #'                        1) default is 'pairwise', which compare all possible pairs between two conditions.
@@ -22,7 +22,7 @@
 #'
 #' @return A list \code{models} of all modeled and adjusted datasets
 #'
-groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairwise",
+groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix = "pairwise",
                                   moderated = FALSE, adj.method = "BH", calc.corr = FALSE) {
 
   ## save process output in each step
@@ -55,7 +55,7 @@ groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairw
   adj.protein = FALSE
 
   ## Check for missing variables in PTM
-  if (is.null(data))
+  if (is.null(data.ptm))
     stop("PTM estimates are missing!")
   required.columns <- c('Run', 'Protein', 'Abundance', 'Channel',
                 'BioReplicate', 'Condition', 'TechRepMixture', 'Mixture')
@@ -65,7 +65,7 @@ groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairw
   }
 
   ## Determine if PTM should be adjusted for protein level
-  if (!is.null(protein)) {
+  if (!is.null(data.protein)) {
     adj.protein = TRUE
 
     if (!all(required.columns %in% names(protein))) {
@@ -75,14 +75,14 @@ groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairw
   }
 
   ## MSstatsTMT Modeling
-  ptm_model <- MSstatsTMT::groupComparisonTMT(data, contrast.matrix, moderated, adj.method)
+  ptm_model <- MSstatsTMT::groupComparisonTMT(data.ptm, contrast.matrix, moderated, adj.method)
 
   models <- list('PTM.Model' = ptm_model)
 
   if (adj.protein) {
 
     ## MSstatsTMT Modeling
-    protein_model <- MSstatsTMT::groupComparisonTMT(protein, contrast.matrix, moderated, adj.method)
+    protein_model <- MSstatsTMT::groupComparisonTMT(data.protein, contrast.matrix, moderated, adj.method)
 
     ## Parse site from protein name
     regex_protein <- '([^-]+)(?:_[^-]+){1}$'

@@ -1,7 +1,7 @@
 #' Visualization for explanatory data analysis - TMT experiment
 #'
 #' To illustrate the quantitative data and quality control of MS runs,
-#' dataProcessPlotsTMT takes the quantitative data from converter functions (\code{\link{PDtoMSstatsTMTFormat}}, \code{\link{MaxQtoMSstatsTMTFormat}}, \code{\link{SpectroMinetoMSstatsTMTFormat}}) as input
+#' dataProcessPlotsTMT takes the quantitative data from MSstatsTMT converter functions as input
 #' and generate two types of figures in pdf files as output :
 #' (1) profile plot (specify "ProfilePlot" in option type), to identify the potential sources of variation for each protein;
 #' (2) quality control plot (specify "QCPlot" in option type), to evaluate the systematic bias between MS runs.
@@ -12,10 +12,11 @@
 #' @importFrom grDevices dev.off hcl pdf
 #' @importFrom dplyr mutate
 #' @importFrom reshape2 dcast
-#' @param data.ptm name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions(\code{\link{PDtoMSstatsTMTFormat}}, \code{\link{MaxQtoMSstatsTMTFormat}}, \code{\link{SpectroMinetoMSstatsTMTFormat}}).
-#' @param data.protein name of the data with peptide level, which can be the output of MSstatsTMT converter functions(\code{\link{PDtoMSstatsTMTFormat}}, \code{\link{MaxQtoMSstatsTMTFormat}}, \code{\link{SpectroMinetoMSstatsTMTFormat}}).
-#' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of \code{\link{proteinSummarization}} function.
-#' @param data.protein.summarization name of the data with protein-level, which can be the output of \code{\link{proteinSummarization}} function.
+#' @importFrom MSstatsTMT proteinSummarization
+#' @param data.ptm name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions.
+#' @param data.protein name of the data with peptide level, which can be the output of MSstatsTMT converter functions.
+#' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.
+#' @param data.protein.summarization name of the data with protein-level, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.
 #' @param type choice of visualization. "ProfilePlot" represents profile plot of log intensities across MS runs.
 #' "QCPlot" represents box plots of log intensities across channels and MS runs.
 #' @param ylimUp upper limit for y-axis in the log scale.
