@@ -12,8 +12,10 @@
 #' @importFrom grDevices dev.off hcl pdf
 #' @importFrom dplyr mutate
 #' @importFrom reshape2 dcast
-#' @param data.peptide name of the data with peptide level, which can be the output of converter functions(\code{\link{PDtoMSstatsTMTFormat}}, \code{\link{MaxQtoMSstatsTMTFormat}}, \code{\link{SpectroMinetoMSstatsTMTFormat}}).
-#' @param data.summarization name of the data with protein-level, which can be the output of \code{\link{proteinSummarization}} function.
+#' @param data.ptm name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions(\code{\link{PDtoMSstatsTMTFormat}}, \code{\link{MaxQtoMSstatsTMTFormat}}, \code{\link{SpectroMinetoMSstatsTMTFormat}}).
+#' @param data.protein name of the data with peptide level, which can be the output of MSstatsTMT converter functions(\code{\link{PDtoMSstatsTMTFormat}}, \code{\link{MaxQtoMSstatsTMTFormat}}, \code{\link{SpectroMinetoMSstatsTMTFormat}}).
+#' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of \code{\link{proteinSummarization}} function.
+#' @param data.protein.summarization name of the data with protein-level, which can be the output of \code{\link{proteinSummarization}} function.
 #' @param type choice of visualization. "ProfilePlot" represents profile plot of log intensities across MS runs.
 #' "QCPlot" represents box plots of log intensities across channels and MS runs.
 #' @param ylimUp upper limit for y-axis in the log scale.
@@ -39,48 +41,61 @@
 #' If address=FALSE, plot will be not saved as pdf file but showed in window.
 #' @return plot or pdf
 #' @examples
-#' data(input.pd)
-#' quant.msstats <- proteinSummarization(input.pd,
+#' data(protein.input.pd)
+#' data(ptm.input.pd)
+#' 
+#' quant.msstats.ptm <- proteinSummarization(ptm.input.pd,
 #'                                       method="msstats",
-#'                                       global_norm=TRUE,
-#'                                       reference_norm=TRUE)
-#'
+#'                                       normalization=TRUE,
+#'                                       remove_norm_channel=FALSE,
+#'                                       remove_empty_channel=FALSE)
+#'                                       
+#' quant.msstats.protein <- proteinSummarization(protein.input.pd,
+#'                                       method="msstats",
+#'                                       normalization=TRUE,
+#'                                       remove_norm_channel=FALSE,
+#'                                       remove_empty_channel=FALSE)
+#'                                       
 #' ## Profile plot
-#' dataProcessPlotsTMT(data.peptide=input.pd,
-#'                    data.summarization=quant.msstats,
+#' dataProcessPlotsTMT(data.ptm=ptm.input.pd,
+#'                    data.protein=protein.input.pd,
+#'                    data.ptm.summarization=quant.msstats.ptm,
+#'                    data.protein.summarization=quant.msstats.protein,
 #'                    type='ProfilePlot',
 #'                    width = 21,
 #'                    height = 7)
 #'
 #' ## NottoRun: QC plot
-#' # dataProcessPlotsTMT(data.peptide=input.pd,
-#'                     # data.summarization=quant.msstats,
+#' # dataProcessPlotsTMT(data.ptm=ptm.input.pd,
+#'                     # data.protein=protein.input.pd,
+#'                     # data.ptm.summarization=quant.msstats.ptm,
+#'                     # data.protein.summarization=quant.msstats.protein,
 #'                     # type='QCPlot',
 #'                     # width = 21,
 #'                     # height = 7)
 
 ## TODO: Check which.protein with number, might be messed up bc factor thing
 
-dataProcessPlotsTMTPTM <- function(data.protein,
-                                   data.ptm,
-                                data.protein.summarization,
-                                data.ptm.summarization,
-                                type,
-                                ylimUp = FALSE,
-                                ylimDown = FALSE,
-                                x.axis.size = 10,
-                                y.axis.size = 10,
-                                text.size = 4,
-                                text.angle = 90,
-                                legend.size = 7,
-                                dot.size.profile = 2,
-                                ncol.guide = 5,
-                                width = 10,
-                                height = 10,
-                                which.Protein = "all",
-                                originalPlot = TRUE,
-                                summaryPlot = TRUE,
-                                address = "") {
+dataProcessPlotsTMTPTM <- function(data.ptm,
+                                   data.protein,
+                                   data.ptm.summarization,
+                                   data.protein.summarization,
+                                   type,
+                                   ylimUp = FALSE,
+                                   ylimDown = FALSE,
+                                   x.axis.size = 10,
+                                   y.axis.size = 10,
+                                   text.size = 4,
+                                   text.angle = 90,
+                                   legend.size = 7,
+                                   dot.size.profile = 2,
+                                   ncol.guide = 5,
+                                   width = 10,
+                                   height = 10,
+                                   which.Protein = "all",
+                                   originalPlot = TRUE,
+                                   summaryPlot = TRUE,
+                                   address = "") {
 
   ## save process output in each step
   allfiles <- list.files()

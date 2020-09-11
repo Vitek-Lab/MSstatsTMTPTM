@@ -6,6 +6,10 @@
 #' for adjusting PTM Fold Change by the change in protein abundance
 #' without modification.
 #'
+#' @export
+#' @import dplyr
+#' @importFrom MSstatsTMT groupComparisonTMT
+#' @importFrom MSstatsPTM adjustProteinLevel
 #' @param data PTM dataset returned by the proteinSummarization function
 #' @param protein Protein dataset returned by the proteinSummarization function
 #' @param contrast.matrix Comparison between conditions of interests.
@@ -18,7 +22,6 @@
 #'
 #' @return A list \code{models} of all modeled and adjusted datasets
 #'
-#' @export
 groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairwise",
                                   moderated = FALSE, adj.method = "BH", calc.corr = FALSE) {
 
@@ -71,9 +74,6 @@ groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairw
     }
   }
 
-  setDT(data)
-  setDT(protein)
-
   ## MSstatsTMT Modeling
   ptm_model <- MSstatsTMT::groupComparisonTMT(data, contrast.matrix, moderated, adj.method)
 
@@ -87,19 +87,19 @@ groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairw
     ## Parse site from protein name
     regex_protein <- '([^-]+)(?:_[^-]+){1}$'
     regex_site <- '_(?!.*_)([^-]+)'
-    ptm_model_site_sep <- ptm_model
-    ptm_model_site_sep[, c('Protein', 'Site') := list(stringr::str_match(as.matrix(ptm_model_site_sep[,'Protein']), regex_protein)[,2],
-                                                      stringr::str_match(as.matrix(ptm_model_site_sep[,'Protein']), regex_site)[,2])]
+    ptm_model_site_sep <- ptm_model %>% mutate(Site = str_match(
+      Protein, regex_site)[,2], Protein = str_match(Protein, regex_protein)[,2])
 
     ## adjustProteinLevel function can only compare one label at a time
-    comparisons <- unique(ptm_model_site_sep[, Label])
+    comparisons <- (ptm_model_site_sep %>% distinct(Label))[[1]]
+    adjusted_models <- data.frame()
+    for (i in 1:length(comparisons)) {
+      temp_adjusted_model <- apply_ptm_adjustment(comparisons[[i]], ptm_model_site_sep, protein_model)
+      adjusted_models <- rbind(adjusted_models, temp_adjusted_model)
+    }
 
-    adjusted_models_list <- lapply(comparisons, apply_ptm_adjustment)
-    adjusted_models <- bind_rows(adjusted_models_list)
-    setDT(adjusted_models)
-
-    adjusted_models[, Protein:=do.call(paste, c(.SD, sep = "_")), .SDcols=c(1,2)]
-    adjusted_models <- adjusted_models[, setdiff(names(adjusted_models), c("Site")), with = FALSE]
+    adjusted_models$Protein <- paste(adjusted_models$Protein, adjusted_models$Site, sep = '_')
+    adjusted_models <- adjusted_models %>% select(-Site)
 
     models <- list('PTM.Model' = ptm_model, 'Protein.Model' = protein_model, 'Adjusted.Model' = adjusted_models)
 
@@ -108,8 +108,19 @@ groupComparisonTMTPTM <- function(data, protein = NULL, contrast.matrix = "pairw
   return(models)
 }
 
+#' @keywords internal
+apply_ptm_adjustment <- function(label, ptm_model, protein_model){
+  temp_ptm_model <- ptm_model %>% filter(Label == label)
+  temp_protein_model <- protein_model %>% filter(Label == label)
+  
+  ## Function from MSstatsPTM Compare
+  temp_adjusted_model <- adjustProteinLevel(temp_ptm_model, temp_protein_model)
+  temp_adjusted_model$adj.pvalue <- p.adjust(temp_adjusted_model$pvalue, method = 'BH')
+  temp_adjusted_model
+}
 
-## TODO: Grab new code from MSstatsPTM for this function
+## TODO: Replace this with MSstatsPTM function once made external
+#' @keywords internal
 adjustProteinLevel <- function(diffSite, diffProtein) {
   diffRef <- diffProtein[, c("Protein", "Label", "log2FC", "SE", "DF")]
   names(diffRef)[names(diffRef) == "log2FC"] <- "log2FC_ref"
