@@ -59,7 +59,7 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
     stop("PTM estimates are missing!")
   required.columns <- c('Run', 'Protein', 'Abundance', 'Channel',
                 'BioReplicate', 'Condition', 'TechRepMixture', 'Mixture')
-  if (!all(required.columns %in% names(data))) {
+  if (!all(required.columns %in% names(data.ptm))) {
     stop("Please include in the PTM list all the following elements: ",
          paste0(sQuote(required.columns), collapse = ", "))
   }
@@ -68,7 +68,7 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
   if (!is.null(data.protein)) {
     adj.protein = TRUE
 
-    if (!all(required.columns %in% names(protein))) {
+    if (!all(required.columns %in% names(data.protein))) {
       stop("Please include in the Protein list all the following elements: ",
            paste0(sQuote(required.columns), collapse = ", "))
     }

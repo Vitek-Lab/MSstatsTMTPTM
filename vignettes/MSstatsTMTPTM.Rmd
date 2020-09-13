@@ -72,16 +72,16 @@ head(raw.protein)
 
 # read in summarized data files (from MSstatsTMT proteinSummarization function)
 # quant.msstats.ptm <- proteinSummarization(raw.ptm,
-#                                       method="msstats",
-#                                       normalization=TRUE,
-#                                       remove_norm_channel=FALSE,
-#                                       remove_empty_channel=FALSE)
-#                                       
+#                                           method = "msstats",
+#                                           global_norm = TRUE,
+#                                           reference_norm = FALSE,
+#                                           MBimpute = TRUE)
+# 
 # quant.msstats.protein <- proteinSummarization(raw.protein,
-#                                       method="msstats",
-#                                       normalization=TRUE,
-#                                       remove_norm_channel=FALSE,
-#                                       remove_empty_channel=FALSE)
+#                                           method = "msstats",
+#                                           global_norm = TRUE,
+#                                           reference_norm = FALSE,
+#                                           MBimpute = TRUE)
 head(quant.msstats.ptm)
 head(quant.msstats.protein)
 
@@ -137,3 +137,9 @@ head(test.contrast)
 ```
 
 ## Workflow and Analysis
+
+
+
+
+
+

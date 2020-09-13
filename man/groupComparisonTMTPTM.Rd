@@ -5,8 +5,8 @@
 \title{Model PTM and/or protein data and make adjustments if needed}
 \usage{
 groupComparisonTMTPTM(
-  data,
-  protein = NULL,
+  data.ptm,
+  data.protein = NULL,
   contrast.matrix = "pairwise",
   moderated = FALSE,
   adj.method = "BH",
@@ -14,10 +14,6 @@ groupComparisonTMTPTM(
 )
 }
 \arguments{
-\item{data}{PTM dataset returned by the proteinSummarization function}
-
-\item{protein}{Protein dataset returned by the proteinSummarization function}
-
 \item{contrast.matrix}{Comparison between conditions of interests.
 1) default is 'pairwise', which compare all possible pairs between two conditions.
 2) Otherwise, users can specify the comparisons of interest. Based on the levels of conditions,
@@ -28,7 +24,9 @@ The levels of conditions are sorted alphabetically.}
 
 \item{adj.method}{Adjusted method for multiple comparison. "BH" is default.}
 
-\item{calc.corr}{TRUE will calculate correlation between PTM and protein abundance changes}
+\item{data}{Name of the output of proteinSummarization function with PTM data. It should have columns named \code{Protein}, \code{TechRepMixture},  \code{Mixture}, \code{Run}, \code{Channel}, \code{Condition}, \code{BioReplicate}, \code{Abundance}.}
+
+\item{protein}{Protein dataset returned by the proteinSummarization function}
 }
 \value{
 A list \code{models} of all modeled and adjusted datasets
