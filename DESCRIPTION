@@ -1,13 +1,18 @@
 Type: Package
 Package: MSstatsTMTPTM
-Title: MSstatsTMTPTM
+Title: Post Translational Modification (PTM) Significance Analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling
 Version: 0.0.1
 Date: 2020-08-11
-Authors: Devon Kohler <kohler.d@northestern.edu>
+Description: Tools for Post Translational Modification (PTM) and protein significance analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling.
+Authors: c(person("Devon", "Kohler", email = "kohler.d@northestern.edu", role = c("aut")))
 Maintainer: Devon Kohler <kohler.d@northestern.edu>
-Description: Worflow for analyzing and modeling post-translational modification (PTM) proteomics data generated via tandem mass tag (TMT)
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+License: Artistic-2.0
+Depends: R (>= 4.0)
+Imports: limma, lme4, lmerTest, dplyr, tidyr, statmod, methods,
+    reshape2, data.table, matrixStats, stats, utils, ggplot2, grDevices, graphics, MSstats, MSstatsTMT, MSstatsPTM
+Suggests: BiocStyle, knitr, rmarkdown, testthat
+VignetteBuilder: knitr
+biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
