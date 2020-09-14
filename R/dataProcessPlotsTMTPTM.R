@@ -13,6 +13,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom reshape2 dcast
 #' @importFrom MSstatsTMT proteinSummarization
+#' @importFrom gridExtra grid.arrange
 #' @param data.ptm name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions.
 #' @param data.protein name of the data with peptide level, which can be the output of MSstatsTMT converter functions.
 #' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.
@@ -74,9 +75,6 @@
 #'                     # type='QCPlot',
 #'                     # width = 21,
 #'                     # height = 7)
-
-## TODO: Check which.protein with number, might be messed up bc factor thing
-
 dataProcessPlotsTMTPTM <- function(data.ptm,
                                    data.protein,
                                    data.ptm.summarization,
@@ -149,7 +147,6 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
   datarun.protein <- data.protein.summarization
   datarun.ptm <- data.ptm.summarization
 
-  ## TODO: Add check to make sure conditions are same between ptm and protein
   # conditions in feature data
   fea.conds.protein <- as.character(unique(datafeature.protein$Condition))
   fea.conds.ptm <- as.character(unique(datafeature.ptm$Condition))
@@ -337,14 +334,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
     groupline.protein <- groupline.protein[-which(groupline.protein$Condition %in% levels(groupline.protein$Condition)[nlevels(groupline.protein$Condition)]), ]
     groupline.ptm <- groupline.ptm[-which(groupline.ptm$Condition %in% levels(groupline.ptm$Condition)[nlevels(groupline.ptm$Condition)]), ]
 
-
-    groupline.ptm$xorder <- groupline.ptm$cumGroupAxis - groupline.protein$groupAxis / 2
-    groupline.ptm$abundance <- y.limup - 0.5
-
     ## need to fill in incomplete rows for Runlevel data
     haverun <- FALSE
     
-    ## TODO: Fix warning messages
     if (sum(is.element(colnames(datarun.protein), "Run")) != 0) {
       datamat <- reshape2::dcast(Protein + Channel ~ Run, data = datarun.protein, value.var = 'Abundance', keep = TRUE)
 
@@ -417,7 +409,6 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         sub.ptm$PSM <- factor(as.character(sub.ptm$PSM))
 
         # if all measurements are NA,
-        # TODO: Update this for ptm and protein
         if (nrow(sub.protein) == sum(is.na(sub.protein$abundance))) {
           message(paste0("Can't the Profile plot for ", unique(sub.protein$Protein),
                          "(", i, " of ", length(plot_proteins),
@@ -432,7 +423,6 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           next()
         }
         # if all measurements are NA,
-        # TODO: Update this for ptm and protein
         if (nrow(sub.ptm) == sum(is.na(sub.ptm$abundance))) {
           message(paste0("Can't the Profile plot for ", unique(sub.ptm$Protein),
                          "(", i, " of ", length(plot_proteins),
@@ -656,7 +646,6 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         sub.ptm$PSM <- factor(as.character(sub.ptm$PSM))
         
         # if all measurements are NA,
-        # TODO: Update this for ptm and protein
         if (nrow(sub.protein) == sum(is.na(sub.protein$abundance))) {
           message(paste0("Can't the Profile plot for ", unique(sub.protein$Protein),
                          "(", i, " of ", length(plot_proteins),
@@ -671,7 +660,6 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           next()
         }
         # if all measurements are NA,
-        # TODO: Update this for ptm and protein
         if (nrow(sub.ptm) == sum(is.na(sub.ptm$abundance))) {
           message(paste0("Can't the Profile plot for ", unique(sub.ptm$Protein),
                          "(", i, " of ", length(plot_proteins),

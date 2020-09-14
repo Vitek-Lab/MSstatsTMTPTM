@@ -96,6 +96,8 @@ SE: $\sqrt{SE_{PTM}^2 + SE_{Protein}^2}$
 
 DF: $(SE_{PTM}^2 + SE_{Protein}^2)^2 \biggm/ (\frac{SE_{PTM}^2}{DF_{PTM}} + \frac{SE_{Protein}^2}{DF_{Protein}})$
 
+Please see the package MSstatsPTM for further explanation of adjustment strategy and formulas.
+
 ### Example PTM
 
 ### Added Insight
