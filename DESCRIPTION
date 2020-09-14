@@ -12,7 +12,7 @@ Authors: c(person("Devon", "Kohler", email = "kohler.d@northestern.edu", role = 
 Maintainer: Devon Kohler <kohler.d@northestern.edu>
 License: Artistic-2.0
 Depends: R (>= 4.0)
-Imports: limma, lme4, lmerTest, dplyr, tidyr, statmod, methods,
+Imports: limma, lme4, lmerTest, dplyr, tidyr, statmod, methods, gridExtra,
     reshape2, data.table, matrixStats, stats, utils, ggplot2, grDevices, graphics, MSstats, MSstatsTMT, MSstatsPTM
 Suggests: BiocStyle, knitr, rmarkdown, testthat
 VignetteBuilder: knitr
