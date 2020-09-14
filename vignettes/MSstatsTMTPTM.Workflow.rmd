@@ -21,7 +21,7 @@ library(MSstatsTMTPTM)
 library(MSstatsTMT)
 ```
 
-This Vignette provides an example workflow for how to use the package MSstatsTMTPTM. It also gives provides an analysis and examples of how adjusting for global protein levels allows for a better interpretation of PTM modeling results.
+This Vignette provides an example workflow for how to use the package MSstatsTMTPTM. It also provides examples and an analysis of how adjusting for global protein levels allows for better interpretations of PTM modeling results.
 
 ## Workflow
 
