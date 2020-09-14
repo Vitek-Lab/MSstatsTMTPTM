@@ -43,16 +43,16 @@
 #' If address=FALSE, plot will be not saved as pdf file but showed in window.
 #' @return plot or pdf
 #' @examples
-#' data(protein.input.pd)
-#' data(ptm.input.pd)
+#' data(raw.ptm)
+#' data(raw.protein)
 #' 
-#' quant.msstats.ptm <- proteinSummarization(ptm.input.pd,
+#' quant.msstats.ptm <- proteinSummarization(raw.ptm,
 #'                                       method="msstats",
 #'                                       normalization=TRUE,
 #'                                       remove_norm_channel=FALSE,
 #'                                       remove_empty_channel=FALSE)
 #'                                       
-#' quant.msstats.protein <- proteinSummarization(protein.input.pd,
+#' quant.msstats.protein <- proteinSummarization(raw.protein,
 #'                                       method="msstats",
 #'                                       normalization=TRUE,
 #'                                       remove_norm_channel=FALSE,
