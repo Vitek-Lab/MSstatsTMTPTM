@@ -1,0 +1,87 @@
+---
+title: "MSstatsTMTPTM Example: An example workflow and analysis of the MSstatsTMTPTM package"
+author: "Devon Kohler (<kohler.d@northeaster.edu>)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MSstatsTMT User Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+library(MSstatsTMTPTM)
+library(MSstatsTMT)
+```
+
+This Vignette provides an example workflow for how to use the package MSstatsTMTPTM. It also gives provides an analysis and examples of how adjusting for global protein levels allows for a better interpretation of PTM modeling results.
+
+## Workflow
+
+### Raw Data Format
+
+```{r}
+# read in raw data files
+# raw.ptm <- read.csv(file="raw.ptm.csv", header=TRUE)
+# raw.protein <- read.csv(file="raw.protein.csv", header=TRUE)
+head(raw.ptm)
+head(raw.protein)
+```
+
+The first step is to load in the raw dataset. This can be the output of the MSstatsTMT converter functions: `PDtoMSstatsTMTFormat`, `MaxQtoMSstatsTMTFormat`, `SpectroMinetoMSstatsTMTFormat`. The dataset must include the columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`. It is important to note the ProteinName column in the PTM dataset (`raw.ptm`). The location of the modification must be added into the ProteinName. For example the first row shows `Protein_4_Y474` for ProteinName, with Y474 being the modificaiton site. This can be done as shown above, or by adding the PeptideSequence into the ProteinName, ex. `Protein_4_Peptide_455` for the first row.
+
+
+### proteinSummarization
+
+``` {r}
+
+# Use proteinSummarization function from MSstatsTMT to summarize raw data
+# quant.msstats.ptm <- proteinSummarization(raw.ptm,
+#                                           method = "msstats",
+#                                           global_norm = TRUE,
+#                                           reference_norm = FALSE,
+#                                           MBimpute = TRUE)
+# 
+# quant.msstats.protein <- proteinSummarization(raw.protein,
+#                                           method = "msstats",
+#                                           global_norm = TRUE,
+#                                           reference_norm = FALSE,
+#                                           MBimpute = TRUE)
+head(quant.msstats.ptm)
+head(quant.msstats.protein)
+
+```
+
+After loading in the input data, the next step is to use the proteinSummarization function from MSstatsTMT. This provides the summarized dataset needed to model the protein/PTM abundance. With the modification site added into the protein name, this function will summarize the data for each PTM.
+
+
+### 3. groupComparisonTMTPTM
+
+``` {r}
+
+# test for all the possible pairs of conditions
+# test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+#                                        data.protein=quant.msstats.protein)
+
+# Load specific contrast matrix
+# example.comparisons <- read.csv(file="example.comparisons.csv", header=TRUE)
+example.comparisons
+
+# test for specified condition comparisons only
+test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+                                       data.protein=quant.msstats.protein,
+                                       contrast.matrix = example.comparisons)
+
+
+
+```
+
+
+

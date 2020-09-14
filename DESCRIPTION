@@ -4,7 +4,11 @@ Title: Post Translational Modification (PTM) Significance Analysis in shotgun ma
 Version: 0.0.1
 Date: 2020-08-11
 Description: Tools for Post Translational Modification (PTM) and protein significance analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling.
-Authors: c(person("Devon", "Kohler", email = "kohler.d@northestern.edu", role = c("aut")))
+Authors: c(person("Devon", "Kohler", email = "kohler.d@northestern.edu", role = c("aut", "cre")),
+            person("Ting", "Huang", email = "thuang0703@gmail.com", role=c("aut")),
+          	person("Meena", "Choi", email = "mnchoi67@gmail.com", role="aut"),
+          	person("Sicheng", "Hao", email = "hao.sic@husky.neu.edu", role = "aut"),
+          	person("Olga", "Vitek", email = "o.vitek@northeastern.edu", role = "aut"))
 Maintainer: Devon Kohler <kohler.d@northestern.edu>
 License: Artistic-2.0
 Depends: R (>= 4.0)

@@ -10,8 +10,9 @@
 #' @import dplyr
 #' @importFrom MSstatsTMT groupComparisonTMT
 #' @importFrom MSstatsPTM adjustProteinLevel
-#' @param data Name of the output of proteinSummarization function with PTM data. It should have columns named `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
-#' @param protein Protein dataset returned by the proteinSummarization function
+#' @importFrom stringr str_match
+#' @param data.ptm Name of the output of proteinSummarization function with PTM data. It should have columns named `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
+#' @param data.protein Protein dataset returned by the proteinSummarization function
 #' @param contrast.matrix Comparison between conditions of interests.
 #'                        1) default is 'pairwise', which compare all possible pairs between two conditions.
 #'                        2) Otherwise, users can specify the comparisons of interest. Based on the levels of conditions,
@@ -23,7 +24,7 @@
 #' @return A list \code{models} of all modeled and adjusted datasets
 #'
 groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix = "pairwise",
-                                  moderated = FALSE, adj.method = "BH", calc.corr = FALSE) {
+                                  moderated = FALSE, adj.method = "BH") {
 
   ## save process output in each step
   allfiles <- list.files()
@@ -87,8 +88,8 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
     ## Parse site from protein name
     regex_protein <- '([^-]+)(?:_[^-]+){1}$'
     regex_site <- '_(?!.*_)([^-]+)'
-    ptm_model_site_sep <- ptm_model %>% mutate(Site = str_match(
-      Protein, regex_site)[,2], Protein = str_match(Protein, regex_protein)[,2])
+    ptm_model_site_sep <- ptm_model %>% mutate(Site = stringr::str_match(
+      Protein, regex_site)[,2], Protein = stringr::str_match(Protein, regex_protein)[,2])
 
     ## adjustProteinLevel function can only compare one label at a time
     comparisons <- (ptm_model_site_sep %>% distinct(Label))[[1]]

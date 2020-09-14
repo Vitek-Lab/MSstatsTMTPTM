@@ -32,7 +32,7 @@ MSstatsTMTPTM includes the following two functions for data visualization and st
 1. Data visualization of PTM and global protein levels: `dataProcessPlotsTMTPMT`
 2. Group comparison on PTM/protein quantification data: `groupComparisonTMTPTM`
 
-## 1. dataProcessPlotsTMTPMT()
+## 1. dataProcessPlotsTMTPTM()
 
 To illustrate the quantitative data and quality control of MS runs, dataProcessPlotsTMT takes the quantitative data from MSstatsTMT converter functions as input and generate two types of figures in pdf files as output :
 1. Profile plot (specify "ProfilePlot" in option type), to identify the potential sources of variation for each protein;
@@ -102,7 +102,7 @@ dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
 ```
 
 
-### 3. groupComparisonTMT()
+### 3. groupComparisonTMTPTM()
 
 Tests for significant changes in PTM abundance adjusted for global protein abundance across conditions based on a family of linear mixed-effects models in TMT experiment. Experimental design of case-control study (patients are not repeatedly measured) is automatically determined based on proper statistical model.
 
@@ -135,11 +135,4 @@ test.contrast <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                        contrast.matrix = comparison)
 head(test.contrast)
 ```
-
-## Workflow and Analysis
-
-
-
-
-
 
