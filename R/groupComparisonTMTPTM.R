@@ -22,6 +22,18 @@
 #' @param adj.method Adjusted method for multiple comparison. "BH" is default.
 #'
 #' @return A list \code{models} of all modeled and adjusted datasets
+#' @examples
+#' # Load summarized datasets from MSstatsTMT proteinSummarization function
+#' data(quant.msstats.ptm)
+#' data(quant.msstats.protein)
+#' 
+#' # Load specific contrast matrix
+#' data(example.comparisons)
+#'
+#" # test for specified condition comparisons only
+#' test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+#'                                       data.protein=quant.msstats.protein,
+#'                                       contrast.matrix = example.comparisons)
 #'
 groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix = "pairwise",
                                   moderated = FALSE, adj.method = "BH") {

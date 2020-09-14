@@ -9,11 +9,14 @@ groupComparisonTMTPTM(
   data.protein = NULL,
   contrast.matrix = "pairwise",
   moderated = FALSE,
-  adj.method = "BH",
-  calc.corr = FALSE
+  adj.method = "BH"
 )
 }
 \arguments{
+\item{data.ptm}{Name of the output of proteinSummarization function with PTM data. It should have columns named \code{Protein}, \code{TechRepMixture},  \code{Mixture}, \code{Run}, \code{Channel}, \code{Condition}, \code{BioReplicate}, \code{Abundance}.}
+
+\item{data.protein}{Protein dataset returned by the proteinSummarization function}
+
 \item{contrast.matrix}{Comparison between conditions of interests.
 1) default is 'pairwise', which compare all possible pairs between two conditions.
 2) Otherwise, users can specify the comparisons of interest. Based on the levels of conditions,
@@ -23,10 +26,6 @@ The levels of conditions are sorted alphabetically.}
 \item{moderated}{TRUE will moderate t statistic; FALSE (default) uses ordinary t statistic.}
 
 \item{adj.method}{Adjusted method for multiple comparison. "BH" is default.}
-
-\item{data}{Name of the output of proteinSummarization function with PTM data. It should have columns named \code{Protein}, \code{TechRepMixture},  \code{Mixture}, \code{Run}, \code{Channel}, \code{Condition}, \code{BioReplicate}, \code{Abundance}.}
-
-\item{protein}{Protein dataset returned by the proteinSummarization function}
 }
 \value{
 A list \code{models} of all modeled and adjusted datasets
@@ -37,4 +36,17 @@ groupComparisonTMT. Can also take protein level data in the same format
 and model with groupComparisonTMT. Including protein data allows
 for adjusting PTM Fold Change by the change in protein abundance
 without modification.
+}
+\examples{
+# Load summarized datasets from MSstatsTMT proteinSummarization function
+data(quant.msstats.ptm)
+data(quant.msstats.protein)
+
+# Load specific contrast matrix
+data(example.comparisons)
+
+test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+                                      data.protein=quant.msstats.protein,
+                                      contrast.matrix = example.comparisons)
+
 }

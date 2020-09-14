@@ -84,4 +84,23 @@ test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
 ```
 
 
+## Analysis
+
+### How do we combine models?
+
+First we model both the PTM and global protein datasets with the MSstatsTMT groupcomparison function (as noted by the modeling formula above). The resulting modeling parameters are then combined using the adjustment formulas below:
+
+Log2FC: $\log_2FC_{PTM} - \log_2FC_{Protein}$
+
+SE: $\sqrt{SE_{PTM}^2 + SE_{Protein}^2}$
+
+DF: $(SE_{PTM}^2 + SE_{Protein}^2)^2 \biggm/ (\frac{SE_{PTM}^2}{DF_{PTM}} + \frac{SE_{Protein}^2}{DF_{Protein}})$
+
+### Example PTM
+
+### Added Insight
+
+
+
+
 
