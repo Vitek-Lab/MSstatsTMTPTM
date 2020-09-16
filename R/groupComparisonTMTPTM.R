@@ -8,6 +8,8 @@
 #'
 #' @export
 #' @import dplyr
+#' @import stats
+#' @import utils
 #' @importFrom MSstatsTMT groupComparisonTMT
 #' @importFrom stringr str_match
 #' @param data.ptm Name of the output of proteinSummarization function with PTM data. It should have columns named `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.

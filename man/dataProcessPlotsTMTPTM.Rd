@@ -88,19 +88,9 @@ and generate two types of figures in pdf files as output :
 \examples{
 data(raw.ptm)
 data(raw.protein)
+data(quant.msstats.ptm)
+data(quant.msstats.protein)
 
-quant.msstats.ptm <- proteinSummarization(raw.ptm,
-                                      method="msstats",
-                                      normalization=TRUE,
-                                      remove_norm_channel=FALSE,
-                                      remove_empty_channel=FALSE)
-                                      
-quant.msstats.protein <- proteinSummarization(raw.protein,
-                                      method="msstats",
-                                      normalization=TRUE,
-                                      remove_norm_channel=FALSE,
-                                      remove_empty_channel=FALSE)
-                                      
 ## Profile plot
 dataProcessPlotsTMT(data.ptm=ptm.input.pd,
                    data.protein=protein.input.pd,
