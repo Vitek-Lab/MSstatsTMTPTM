@@ -12,8 +12,8 @@ Author: c(person("Devon", "Kohler", email = "kohler.d@northestern.edu", role = c
 Maintainer: Devon Kohler <kohler.d@northestern.edu>
 License: Artistic-2.0
 Depends: R (>= 4.0)
-Imports: limma, lme4, lmerTest, dplyr, tidyr, statmod, methods, gridExtra, stringr,
-    reshape2, data.table, matrixStats, stats, utils, ggplot2, grDevices, graphics, MSstats, MSstatsTMT, MSstatsPTM
+Imports: dplyr, gridExtra, stringr, reshape2, stats, utils, 
+          ggplot2, grDevices, graphics, MSstatsTMT
 Suggests: BiocStyle, knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software, DifferentialExpression
