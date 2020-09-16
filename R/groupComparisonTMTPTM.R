@@ -9,7 +9,6 @@
 #' @export
 #' @import dplyr
 #' @importFrom MSstatsTMT groupComparisonTMT
-#' @importFrom MSstatsPTM adjustProteinLevel
 #' @importFrom stringr str_match
 #' @param data.ptm Name of the output of proteinSummarization function with PTM data. It should have columns named `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
 #' @param data.protein Protein dataset returned by the proteinSummarization function
@@ -26,7 +25,7 @@
 #' # Load summarized datasets from MSstatsTMT proteinSummarization function
 #' data(quant.msstats.ptm)
 #' data(quant.msstats.protein)
-#' 
+#'
 #' # Load specific contrast matrix
 #' data(example.comparisons)
 #'
@@ -100,8 +99,8 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
     ## Parse site from protein name
     regex_protein <- '([^-]+)(?:_[^-]+){1}$'
     regex_site <- '_(?!.*_)([^-]+)'
-    ptm_model_site_sep <- ptm_model %>% mutate(Site = stringr::str_match(
-      Protein, regex_site)[,2], Protein = stringr::str_match(Protein, regex_protein)[,2])
+    ptm_model_site_sep <- ptm_model %>% mutate(Site = str_match(
+      Protein, regex_site)[,2], Protein = str_match(Protein, regex_protein)[,2])
 
     ## adjustProteinLevel function can only compare one label at a time
     comparisons <- (ptm_model_site_sep %>% distinct(Label))[[1]]
@@ -125,7 +124,7 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
 apply_ptm_adjustment <- function(label, ptm_model, protein_model){
   temp_ptm_model <- ptm_model %>% filter(Label == label)
   temp_protein_model <- protein_model %>% filter(Label == label)
-  
+
   ## Function from MSstatsPTM Compare
   temp_adjusted_model <- adjustProteinLevel(temp_ptm_model, temp_protein_model)
   temp_adjusted_model$adj.pvalue <- p.adjust(temp_adjusted_model$pvalue, method = 'BH')

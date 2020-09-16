@@ -86,16 +86,16 @@ and generate two types of figures in pdf files as output :
 (2) quality control plot (specify "QCPlot" in option type), to evaluate the systematic bias between MS runs.
 }
 \examples{
-data(protein.input.pd)
-data(ptm.input.pd)
+data(raw.ptm)
+data(raw.protein)
 
-quant.msstats.ptm <- proteinSummarization(ptm.input.pd,
+quant.msstats.ptm <- proteinSummarization(raw.ptm,
                                       method="msstats",
                                       normalization=TRUE,
                                       remove_norm_channel=FALSE,
                                       remove_empty_channel=FALSE)
                                       
-quant.msstats.protein <- proteinSummarization(protein.input.pd,
+quant.msstats.protein <- proteinSummarization(raw.protein,
                                       method="msstats",
                                       normalization=TRUE,
                                       remove_norm_channel=FALSE,
