@@ -4,7 +4,7 @@ author: "Devon Kohler (<kohler.d@northeaster.edu>)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{MSstatsTMT User Guide}
+  %\VignetteIndexEntry{MSstatsTMTPTM Workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -79,7 +79,8 @@ test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                        data.protein=quant.msstats.protein,
                                        contrast.matrix = example.comparisons)
 
-
+names(test.pairwise)
+head(test.pairwise[[1]])
 
 ```
 

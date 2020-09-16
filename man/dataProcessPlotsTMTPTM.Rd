@@ -92,8 +92,8 @@ data(quant.msstats.ptm)
 data(quant.msstats.protein)
 
 ## Profile plot
-dataProcessPlotsTMT(data.ptm=ptm.input.pd,
-                   data.protein=protein.input.pd,
+dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
+                   data.protein=raw.protein,
                    data.ptm.summarization=quant.msstats.ptm,
                    data.protein.summarization=quant.msstats.protein,
                    type='ProfilePlot',
@@ -101,8 +101,8 @@ dataProcessPlotsTMT(data.ptm=ptm.input.pd,
                    height = 7)
 
 ## NottoRun: QC plot
-# dataProcessPlotsTMT(data.ptm=ptm.input.pd,
-                    # data.protein=protein.input.pd,
+# dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
+                    # data.protein=raw.protein,
                     # data.ptm.summarization=quant.msstats.ptm,
                     # data.protein.summarization=quant.msstats.protein,
                     # type='QCPlot',

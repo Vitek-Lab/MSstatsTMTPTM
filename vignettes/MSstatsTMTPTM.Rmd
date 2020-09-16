@@ -4,7 +4,7 @@ author: "Devon Kohler (<kohler.d@northeaster.edu>)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{MSstatsTMT User Guide}
+  %\VignetteIndexEntry{MSstatsTMTPTM Function Overview}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -90,6 +90,7 @@ dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
                     data.protein=raw.protein,
                     data.ptm.summarization=quant.msstats.ptm,
                     data.protein.summarization=quant.msstats.protein,
+                    which.Protein = 1,
                     type='ProfilePlot')
 
 # Quality Control Plot
@@ -120,7 +121,8 @@ Tests for significant changes in PTM abundance adjusted for global protein abund
 # test for all the possible pairs of conditions
 test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                        data.protein=quant.msstats.protein)
-head(test.pairwise)
+names(test.pairwise)
+head(test.pairwise[[1]])
 
 # Load specific contrast matrix
 # example.comparisons <- read.csv(file="example.comparisons.csv", header=TRUE)
@@ -131,6 +133,7 @@ test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                        data.protein=quant.msstats.protein,
                                        contrast.matrix = example.comparisons)
 
-head(test.contrast)
+names(test.pairwise)
+head(test.pairwise[[1]])
 ```
 

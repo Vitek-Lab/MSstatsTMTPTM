@@ -107,17 +107,81 @@
 "quant.msstats.protein"
 
 #' Example contrast matrix for input into the groupComparisonTMTPTM function
-#' 
+#'
 #' Manually specified comparisons of interest for contrast.matrix
 #' arguement of groupComparisonTMTPTM.
-#' 
+#'
 #' \itemize{
 #'   \item Condition_1, ... Condition_6 : Column names are conditions in dataset
 #'   \item 1-4, ... 5-6 : Row names are comparisons of interest
 #' }
-#' 
+#'
 #' @format A data frame with 9 rows and 6 variables.
 #' @examples
 #' head(example.comparisons)
 #'
 "example.comparisons"
+
+#' Ouput of groupComparisonTMTPTM for full pairwise test
+#'
+#' Returns the a list with three dataframes for three
+#' statistical models. One for each Protein, PTM,
+#' and PTM adjusted for protein level.
+#'
+#' \itemize{
+#'   \item List objects: PTM.Model, Protein.Model, Adjusted.Model (all \code{dataframe}). Columns as follows:
+#'   \item Protein : Protein ID
+#'   \item Label: Label of the pairwise comparision or contrast
+#'   \item log2FC: Log2 fold change
+#'   \item SE: Standard error of the comparsion of contrast results
+#'   \item DF: Degree of freedom
+#'   \item pvalue: Value of p statistic of the test
+#'   \item adj.pvalue: adjusted p value
+#'   \item issue: used for indicating the reason why a comparison is not testable. NA means the comparison is testable.
+#'   'oneConditionMissing' means the protein has no measurements in one conndition of the comparison.
+#'   Furtherone, when 'issue = oneConditionMissing', 'log2FC = Inf' means the negative condition
+#'   (with coefficient -1 in the Label column)  is missing and 'log2FC = -Inf' means
+#'   the positive condition (with coefficient 1 in the Label column)  is missing.
+#'   completeMissing' means the protein has no measurements in all the connditions of the comparison.
+#'   unfittableModel' means there is no enough measurements to fit the linear model.
+#'   In other words, each condition has only one measurement.
+#' }
+#'
+#' @format A list of three dataframes
+#' @examples
+#' names(test.pairwise)
+#' head(test.pairwise[[1]])
+#'
+"test.pairwise"
+
+#' Ouput of groupComparisonTMTPTM for specific comparisons of interest
+#'
+#' Returns the a list with three dataframes for three
+#' statistical models. One for each Protein, PTM,
+#' and PTM adjusted for protein level.
+#'
+#' \itemize{
+#'   \item List objects: PTM.Model, Protein.Model, Adjusted.Model (all \code{dataframe}). Columns as follows:
+#'   \item Protein : Protein ID
+#'   \item Label: Label of the pairwise comparision or contrast
+#'   \item log2FC: Log2 fold change
+#'   \item SE: Standard error of the comparsion of contrast results
+#'   \item DF: Degree of freedom
+#'   \item pvalue: Value of p statistic of the test
+#'   \item adj.pvalue: adjusted p value
+#'   \item issue: used for indicating the reason why a comparison is not testable. NA means the comparison is testable.
+#'   'oneConditionMissing' means the protein has no measurements in one conndition of the comparison.
+#'   Furtherone, when 'issue = oneConditionMissing', 'log2FC = Inf' means the negative condition
+#'   (with coefficient -1 in the Label column)  is missing and 'log2FC = -Inf' means
+#'   the positive condition (with coefficient 1 in the Label column)  is missing.
+#'   completeMissing' means the protein has no measurements in all the connditions of the comparison.
+#'   unfittableModel' means there is no enough measurements to fit the linear model.
+#'   In other words, each condition has only one measurement.
+#' }
+#'
+#' @format A list of three dataframes
+#' @examples
+#' names(test.example.comparisons)
+#' head(test.example.comparisons[[1]])
+#'
+"test.example.comparisons"

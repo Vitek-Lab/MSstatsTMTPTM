@@ -49,8 +49,8 @@
 #' data(quant.msstats.protein)
 #'
 #' ## Profile plot
-#' dataProcessPlotsTMT(data.ptm=ptm.input.pd,
-#'                    data.protein=protein.input.pd,
+#' dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
+#'                    data.protein=raw.protein,
 #'                    data.ptm.summarization=quant.msstats.ptm,
 #'                    data.protein.summarization=quant.msstats.protein,
 #'                    type='ProfilePlot',
@@ -58,8 +58,8 @@
 #'                    height = 7)
 #'
 #' ## NottoRun: QC plot
-#' # dataProcessPlotsTMT(data.ptm=ptm.input.pd,
-#'                     # data.protein=protein.input.pd,
+#' # dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
+#'                     # data.protein=raw.protein,
 #'                     # data.ptm.summarization=quant.msstats.ptm,
 #'                     # data.protein.summarization=quant.msstats.protein,
 #'                     # type='QCPlot',
@@ -129,7 +129,8 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
 
   Condition = Run = xorder = Channel = NULL
-  PeptideSequence = PSM = NULL
+  PeptideSequence = PSM = ProteinName = NULL
+  GlobalProtein = Protein = NULL
   groupAxis = cumGroupAxis = abundance = analysis = NULL
 
   datafeature.protein <- data.protein

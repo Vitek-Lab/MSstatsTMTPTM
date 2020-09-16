@@ -8,8 +8,8 @@
 #'
 #' @export
 #' @import dplyr
-#' @import stats
-#' @import utils
+#' @importFrom stats p.adjust xtabs
+#' @importFrom utils read.table write.table
 #' @importFrom MSstatsTMT groupComparisonTMT
 #' @importFrom stringr str_match
 #' @param data.ptm Name of the output of proteinSummarization function with PTM data. It should have columns named `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
@@ -65,6 +65,8 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
 
   processout <- rbind(processout,
                       as.matrix(c(" ", " ", "MSstatsTMTPTM - groupComparisonTMTPTM function", " "), ncol=1))
+
+  Protein = Label = Site = NULL
 
   adj.protein = FALSE
 
@@ -124,6 +126,9 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
 
 #' @keywords internal
 apply_ptm_adjustment <- function(label, ptm_model, protein_model){
+
+  Label = NULL
+
   temp_ptm_model <- ptm_model %>% filter(Label == label)
   temp_protein_model <- protein_model %>% filter(Label == label)
 
