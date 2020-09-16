@@ -1,15 +1,14 @@
 
 test_that("groupComparision works", {
-  
+
   output<-groupComparisonTMTPTM(data.ptm = MSstatsTMTPTM::quant.msstats.ptm,
                                 data.protein = MSstatsTMTPTM::quant.msstats.protein)
-  ## TODO: Add output of groupcomparison to data
-  expect_equal(output, MSstatsTMTPTM::test.pairwise, tolerance=1e-5)
-  
+  expect_equal(test.pairwise, MSstatsTMTPTM::test.pairwise, tolerance=1e-5)
+
 })
 
 test_that("groupComparision handle missing column", {
-  
+
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.ptm[,-1]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.ptm[,-2]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.ptm[,-3]))
@@ -19,7 +18,7 @@ test_that("groupComparision handle missing column", {
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.ptm[,-7]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.ptm[,-8]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.ptm[,-c(1,2)]))
-  
+
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.protein[,-1]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.protein[,-2]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.protein[,-3]))
@@ -29,11 +28,11 @@ test_that("groupComparision handle missing column", {
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.protein[,-7]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.protein[,-8]))
   expect_error(groupComparisonTMTPTM(data = MSstatsTMTPTM::quant.msstats.protein[,-c(1,2)]))
-  
+
 })
 
 test_that("groupComparision handle wrong input", {
-  
+
   expect_error(groupComparisonTMTPTM())
   expect_error(groupComparisonTMTPTM(data.ptm = MSstatsTMTPTM::quant.msstats.ptm,
                                   data.protein = MSstatsTMTPTM::quant.msstats.protein,
@@ -44,5 +43,5 @@ test_that("groupComparision handle wrong input", {
   expect_error(groupComparisonTMTPTM(data.ptm = MSstatsTMTPTM::quant.msstats.ptm,
                                   data.protein = MSstatsTMTPTM::quant.msstats.protein,
                                   moderated = "abc"))
-  
+
 })
