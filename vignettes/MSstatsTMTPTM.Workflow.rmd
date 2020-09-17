@@ -1,6 +1,6 @@
 ---
 title: "MSstatsTMTPTM Example: An example workflow and analysis of the MSstatsTMTPTM package"
-author: "Devon Kohler (<kohler.d@northeaster.edu>)"
+author: "Devon Kohler (<kohler.d@northeastern.edu>)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -83,6 +83,8 @@ names(test.pairwise)
 head(test.pairwise[[1]])
 
 ```
+
+
 
 
 ## Analysis
