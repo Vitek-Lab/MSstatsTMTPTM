@@ -20,7 +20,7 @@ dataProcessPlotsTMTPTM(
   dot.size.profile = 2,
   ncol.guide = 5,
   width = 10,
-  height = 10,
+  height = 12,
   which.Protein = "all",
   originalPlot = TRUE,
   summaryPlot = TRUE,
@@ -32,9 +32,11 @@ dataProcessPlotsTMTPTM(
 
 \item{data.protein}{name of the data with peptide level, which can be the output of MSstatsTMT converter functions.}
 
-\item{data.ptm.summarization}{name of the data with ptm sites in protein-level name, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.}
+\item{data.ptm.summarization}{name of the data with ptm sites in protein-level name, which can be the output of
+the MSstatsTMT \code{\link{proteinSummarization}} function.}
 
-\item{data.protein.summarization}{name of the data with protein-level, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.}
+\item{data.protein.summarization}{name of the data with protein-level, which can be the output of the
+MSstatsTMT \code{\link{proteinSummarization}} function.}
 
 \item{type}{choice of visualization. "ProfilePlot" represents profile plot of log intensities across MS runs.
 "QCPlot" represents box plots of log intensities across channels and MS runs.}
@@ -96,16 +98,12 @@ dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
                    data.protein=raw.protein,
                    data.ptm.summarization=quant.msstats.ptm,
                    data.protein.summarization=quant.msstats.protein,
-                   type='ProfilePlot',
-                   width = 21,
-                   height = 7)
+                   type='ProfilePlot')
 
 ## NottoRun: QC plot
 # dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
                     # data.protein=raw.protein,
                     # data.ptm.summarization=quant.msstats.ptm,
                     # data.protein.summarization=quant.msstats.protein,
-                    # type='QCPlot',
-                    # width = 21,
-                    # height = 7)
+                    # type='QCPlot')
 }

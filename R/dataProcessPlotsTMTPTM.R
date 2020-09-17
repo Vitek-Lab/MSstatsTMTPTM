@@ -16,8 +16,10 @@
 #' @importFrom gridExtra grid.arrange
 #' @param data.ptm name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions.
 #' @param data.protein name of the data with peptide level, which can be the output of MSstatsTMT converter functions.
-#' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.
-#' @param data.protein.summarization name of the data with protein-level, which can be the output of the MSstatsTMT \code{\link{proteinSummarization}} function.
+#' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of
+#' the MSstatsTMT \code{\link{proteinSummarization}} function.
+#' @param data.protein.summarization name of the data with protein-level, which can be the output of the
+#' MSstatsTMT \code{\link{proteinSummarization}} function.
 #' @param type choice of visualization. "ProfilePlot" represents profile plot of log intensities across MS runs.
 #' "QCPlot" represents box plots of log intensities across channels and MS runs.
 #' @param ylimUp upper limit for y-axis in the log scale.
@@ -53,18 +55,14 @@
 #'                    data.protein=raw.protein,
 #'                    data.ptm.summarization=quant.msstats.ptm,
 #'                    data.protein.summarization=quant.msstats.protein,
-#'                    type='ProfilePlot',
-#'                    width = 21,
-#'                    height = 7)
+#'                    type='ProfilePlot')
 #'
 #' ## NottoRun: QC plot
 #' # dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
 #'                     # data.protein=raw.protein,
 #'                     # data.ptm.summarization=quant.msstats.ptm,
 #'                     # data.protein.summarization=quant.msstats.protein,
-#'                     # type='QCPlot',
-#'                     # width = 21,
-#'                     # height = 7)
+#'                     # type='QCPlot')
 dataProcessPlotsTMTPTM <- function(data.ptm,
                                    data.protein,
                                    data.ptm.summarization,
@@ -80,7 +78,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
                                    dot.size.profile = 2,
                                    ncol.guide = 5,
                                    width = 10,
-                                   height = 10,
+                                   height = 12,
                                    which.Protein = "all",
                                    originalPlot = TRUE,
                                    summaryPlot = TRUE,
@@ -322,7 +320,8 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
     groupline.all.ptm <- groupline.ptm
 
     ## remove last condition for vertical line between groups
-    groupline.protein <- groupline.protein[-which(groupline.protein$Condition %in% levels(groupline.protein$Condition)[nlevels(groupline.protein$Condition)]), ]
+    groupline.protein <- groupline.protein[-which(groupline.protein$Condition %in%
+                                                    levels(groupline.protein$Condition)[nlevels(groupline.protein$Condition)]), ]
     groupline.ptm <- groupline.ptm[-which(groupline.ptm$Condition %in% levels(groupline.ptm$Condition)[nlevels(groupline.ptm$Condition)]), ]
 
     ## need to fill in incomplete rows for Runlevel data
@@ -359,6 +358,16 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
     ## y-axis labeling
     yaxis.name <- 'Log2-intensities'
 
+    ## Only plot proteins that occur in both datasets
+    global_proteins <- (datafeature.protein %>% distinct(Protein))[[1]]
+    ptm_proteins <- (datafeature.ptm %>% distinct(GlobalProtein))[[1]]
+    plot_proteins <- intersect(ptm_proteins, global_proteins)
+
+    datafeature.ptm <- datafeature.ptm %>% filter(GlobalProtein %in% plot_proteins)
+
+    ## TODO: If protein included in which.protein is not available in both datasets, print that here:
+    plot_proteins <- (datafeature.ptm %>% distinct(Protein))[[1]]
+
     if (originalPlot) {
       if (address != FALSE) {
         allfiles <- list.files()
@@ -375,15 +384,6 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         pdf(finalfile, width = width, height = height)
       }
 
-      ## Only plot proteins that occur in both datasets
-      global_proteins <- (datafeature.protein %>% distinct(Protein))[[1]]
-      ptm_proteins <- (datafeature.ptm %>% distinct(GlobalProtein))[[1]]
-      plot_proteins <- intersect(ptm_proteins, global_proteins)
-
-      datafeature.ptm <- datafeature.ptm %>% filter(GlobalProtein %in% plot_proteins)
-
-      ## TODO: If protein included in which.protein is not available in both datasets, print that here:
-      plot_proteins <- (datafeature.ptm %>% distinct(Protein))[[1]]
       ## factoring for run, channel, condition should be done before loop
 
       for (i in 1:length(plot_proteins)) {
@@ -503,7 +503,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           scale_colour_manual(values=cbp[s.protein]) +
           scale_linetype_manual(values = ss.protein) +
           scale_shape_manual(values = c(16)) +
-          labs(title = unique(sub.protein$Protein),
+          labs(title = paste0('Protein - ', unique(sub.protein$Protein)),
                x = 'MS runs') +
           scale_y_continuous(yaxis.name, limits = c(y.limdown, y.limup)) +
           scale_x_continuous('MS runs') +
@@ -551,7 +551,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           scale_colour_manual(values=cbp[s.ptm]) +
           scale_linetype_manual(values = ss.ptm) +
           scale_shape_manual(values = c(16)) +
-          labs(title = unique(sub.ptm$Protein),
+          labs(title = paste0('PTM - ', unique(sub.ptm$Protein)),
                x = 'MS runs') +
           scale_y_continuous(yaxis.name, limits = c(y.limdown, y.limup)) +
           scale_x_continuous('MS runs') +
@@ -765,7 +765,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
             scale_shape_manual(values = c(16)) +
             scale_size_manual(values = c(1.7, 2), guide = "none") +
             scale_linetype_manual(values = c(rep(1, times = length(unique(final.ptm$PSM))-1), 2), guide = "none") +
-            labs(title = unique(sub.ptm$Protein),
+            labs(title = paste0('PTM - ', unique(sub.ptm$Protein)),
                  x = 'MS runs') +
             scale_y_continuous(yaxis.name, limits = c(y.limdown, y.limup)) +
             geom_vline(data = groupline.tmp.ptm,
@@ -808,7 +808,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
             scale_shape_manual(values = c(16)) +
             scale_size_manual(values = c(1.7, 2), guide = "none") +
             scale_linetype_manual(values = c(rep(1, times = length(unique(final.protein$PSM))-1), 2), guide = "none") +
-            labs(title = unique(sub.protein$Protein),
+            labs(title = paste0('Protein - ', unique(sub.protein$Protein)),
                  x = 'MS runs') +
             scale_y_continuous(yaxis.name, limits = c(y.limdown, y.limup)) +
             geom_vline(data = groupline.tmp.protein,
@@ -839,7 +839,8 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
                                         label.theme = element_text(size = 10, angle = 0)))
 
           ## draw point again because some red summary dots could be hiden
-          ptempall.protein <- ptempall.protein + geom_point(data = final.protein, aes(x = xorder, y = abundance, size = analysis, color = analysis))
+          ptempall.protein <- ptempall.protein + geom_point(data = final.protein, aes(x = xorder,
+                                                                                      y = abundance, size = analysis, color = analysis))
 
           gridExtra::grid.arrange(ptempall.ptm, ptempall.protein, ncol=1)
 
@@ -1158,7 +1159,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         ptemp.ptm <- ggplot(aes_string(x = 'xorder', y = 'abundance'), data = sub.ptm) +
           facet_grid(~Run) +
           geom_boxplot(aes_string(fill = 'Condition'), outlier.shape = 1, outlier.size = 1.5) +
-          labs(title = unique(sub.ptm$Protein),
+          labs(title = paste0('PTM - ', unique(sub.ptm$Protein)),
                x = 'MS runs') +
           scale_y_continuous(yaxis.name, limits = c(y.limdown, y.limup)) +
           geom_vline(data = groupline.tmp.ptm,
@@ -1167,7 +1168,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           geom_text(data = groupline.all.tmp.ptm,
                     aes(x = xorder, y = abundance, label = Condition),
                     size = text.size,
-                    angle = text.angle,
+                    angle = text.angle, hjust = .75,
                     color = "black") +
           theme(
             panel.background = element_rect(fill = 'white', colour = "black"),
@@ -1186,7 +1187,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         ptemp.protein <- ggplot(aes_string(x = 'xorder', y = 'abundance'), data = sub.protein) +
           facet_grid(~Run) +
           geom_boxplot(aes_string(fill = 'Condition'), outlier.shape = 1, outlier.size = 1.5) +
-          labs(title = unique(sub.protein$Protein),
+          labs(title = paste0('Protein - ', unique(sub.protein$Protein)),
                x = 'MS runs') +
           scale_y_continuous(yaxis.name, limits = c(y.limdown, y.limup)) +
           geom_vline(data = groupline.tmp.protein,
@@ -1195,7 +1196,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           geom_text(data = groupline.all.tmp.protein,
                     aes(x = xorder, y = abundance, label = Condition),
                     size = text.size,
-                    angle = text.angle,
+                    angle = text.angle, hjust = .75,
                     color = "black") +
           theme(
             panel.background = element_rect(fill = 'white', colour = "black"),
@@ -1223,8 +1224,5 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
       dev.off()
     }
   } # end QC plot
-
-  ## Write log file
-  write.table(processout, file=finalfile, row.names=FALSE)
 
 }

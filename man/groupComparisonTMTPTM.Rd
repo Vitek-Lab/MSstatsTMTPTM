@@ -13,7 +13,8 @@ groupComparisonTMTPTM(
 )
 }
 \arguments{
-\item{data.ptm}{Name of the output of proteinSummarization function with PTM data. It should have columns named \code{Protein}, \code{TechRepMixture},  \code{Mixture}, \code{Run}, \code{Channel}, \code{Condition}, \code{BioReplicate}, \code{Abundance}.}
+\item{data.ptm}{Name of the output of proteinSummarization function with PTM data. It should have columns named
+\code{Protein}, \code{TechRepMixture},  \code{Mixture}, \code{Run}, \code{Channel}, \code{Condition}, \code{BioReplicate}, \code{Abundance}.}
 
 \item{data.protein}{Protein dataset returned by the proteinSummarization function}
 
