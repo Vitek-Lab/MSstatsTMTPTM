@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 ```{r}
 library(MSstatsTMTPTM)
 library(MSstatsTMT)
+library(MSstats)
 ```
 
 This Vignette provides an example workflow for how to use the package MSstatsTMTPTM. It also provides examples and an analysis of how adjusting for global protein levels allows for better interpretations of PTM modeling results.
@@ -75,17 +76,33 @@ After loading in the input data, the next step is to use the proteinSummarizatio
 example.comparisons
 
 # test for specified condition comparisons only
-test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-                                       data.protein=quant.msstats.protein,
-                                       contrast.matrix = example.comparisons)
+# test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+#                                        data.protein=quant.msstats.protein,
+#                                        contrast.matrix = example.comparisons)
 
-names(test.pairwise)
-head(test.pairwise[[1]])
+names(test.example.comparisons)
+ptm_model <- test.example.comparisons[[1]]
+protein_model <- test.example.comparisons[[2]]
+adjusted_model <- test.example.comparisons[[3]]
+
+head(adjusted_model)
 
 ```
 
+The modeling function will return a list consisting of three dataframes. One each for the PTM, Protein, and Adjusted PTM models. Using these dataframes modeling plots can be created using the groupComparisonPlots function from MSstats.
 
+### Example Volcano Plot
 
+``` {r}
+groupComparisonPlots(data = adjusted_model,
+                     type = 'VolcanoPlot',
+                     ProteinName = FALSE,
+                     which.Comparison = '1-4',
+                     address = FALSE)
+
+```
+
+The dataframes from the groupComparisonTMTPTM function are compatible with the groupComparisonPlots function from MSstats and the plots can be used to analyze the models.
 
 ## Analysis
 
@@ -105,7 +122,17 @@ Please see the package MSstatsPTM for further explanation of adjustment strategy
 
 ### Added Insight
 
+``` {r}
+dataProcessPlotsTMTPTM(data.ptm = raw.ptm,
+                       data.protein = raw.protein,
+                       data.ptm.summarization = quant.msstats.ptm,
+                       data.protein.summarization = quant.msstats.protein,
+                       type = 'ProfilePlot',
+                       which.Protein = 1,
+                       summaryPlot = FALSE,
+                       address = FALSE)
 
+```
 
 
 
