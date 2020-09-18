@@ -513,7 +513,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           geom_text(data = groupline.all.tmp.protein,
                     aes(x = xorder, y = abundance, label = Condition),
                     size = text.size,
-                    angle = text.angle, hjust = .75,
+                    angle = text.angle, hjust = .9,
                     color = "black") +
           theme(
             panel.background = element_rect(fill = 'white', colour = "black"),
@@ -561,7 +561,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           geom_text(data = groupline.all.tmp.ptm,
                     aes(x = xorder, y = abundance, label = Condition),
                     size = text.size,
-                    angle = text.angle, hjust = .75,
+                    angle = text.angle, hjust = .9,
                     color = "black") +
           theme(
             panel.background = element_rect(fill = 'white', colour = "black"),
@@ -774,7 +774,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
             geom_text(data = groupline.all.tmp.ptm,
                       aes(x = xorder, y = abundance, label = Condition),
                       size = text.size,
-                      angle = text.angle, hjust = .75,
+                      angle = text.angle, hjust = .9,
                       color = "black") +
             theme(
               panel.background = element_rect(fill = 'white', colour = "black"),
@@ -817,7 +817,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
             geom_text(data = groupline.all.tmp.protein,
                       aes(x = xorder, y = abundance, label = Condition),
                       size = text.size,
-                      angle = text.angle, hjust = .75,
+                      angle = text.angle, hjust = .9,
                       color = "black") +
             theme(
               panel.background = element_rect(fill = 'white', colour = "black"),
@@ -1168,7 +1168,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           geom_text(data = groupline.all.tmp.ptm,
                     aes(x = xorder, y = abundance, label = Condition),
                     size = text.size,
-                    angle = text.angle, hjust = .75,
+                    angle = text.angle, hjust = .9,
                     color = "black") +
           theme(
             panel.background = element_rect(fill = 'white', colour = "black"),
@@ -1196,7 +1196,7 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
           geom_text(data = groupline.all.tmp.protein,
                     aes(x = xorder, y = abundance, label = Condition),
                     size = text.size,
-                    angle = text.angle, hjust = .75,
+                    angle = text.angle, hjust = .9,
                     color = "black") +
           theme(
             panel.background = element_rect(fill = 'white', colour = "black"),
