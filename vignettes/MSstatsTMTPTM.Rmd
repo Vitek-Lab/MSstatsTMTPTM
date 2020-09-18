@@ -4,7 +4,7 @@ author: "Devon Kohler (<kohler.d@northeaster.edu>)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{MSstatsTMTPTM Function Overview}
+  %\VignetteIndexEntry{MSstatsTMTPTM : A package for post translational modification (PTM) significance analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling"}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -119,8 +119,8 @@ Tests for significant changes in PTM abundance adjusted for global protein abund
 
 ```{r message = FALSE, warning = FALSE}
 # test for all the possible pairs of conditions
-test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-                                       data.protein=quant.msstats.protein)
+# test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+#                                        data.protein=quant.msstats.protein)
 names(test.pairwise)
 head(test.pairwise[[1]])
 
@@ -129,9 +129,9 @@ head(test.pairwise[[1]])
 example.comparisons
 
 # test for specified condition comparisons only
-test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-                                       data.protein=quant.msstats.protein,
-                                       contrast.matrix = example.comparisons)
+# test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+#                                        data.protein=quant.msstats.protein,
+#                                        contrast.matrix = example.comparisons)
 
 names(test.pairwise)
 head(test.pairwise[[1]])

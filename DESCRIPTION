@@ -4,20 +4,20 @@ Title: Post Translational Modification (PTM) Significance Analysis in shotgun ma
 Version: 0.99.1
 Date: 2020-09-14
 Description: Tools for Post Translational Modification (PTM) and protein significance analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling.
-Author: c(person("Devon", "Kohler", email = "kohler.d@northestern.edu", role = c("aut", "cre")),
+Author: c(person("Devon", "Kohler", email = "kohler.d@northeastern.edu", role = c("aut", "cre")),
             person("Ting", "Huang", email = "thuang0703@gmail.com", role=c("aut")),
             person("Mateusz", "Staniak", email = "mtst@mstaniak.pl", role = c("aut")),
           	person("Meena", "Choi", email = "mnchoi67@gmail.com", role="aut"),
           	person("Tsung-Heng", "Tsai", email = "tsai.tsungheng@gmail.com", role = "aut"),
           	person("Olga", "Vitek", email = "o.vitek@northeastern.edu", role = "aut"))
-Maintainer: Devon Kohler <kohler.d@northestern.edu>
+Maintainer: Devon Kohler <kohler.d@northeastern.edu>
 License: Artistic-2.0
 Depends: R (>= 4.0)
 Imports: dplyr, gridExtra, stringr, reshape2, stats, utils, 
           ggplot2, grDevices, graphics, MSstatsTMT
 Suggests: BiocStyle, knitr, rmarkdown, testthat
 VignetteBuilder: knitr
-biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software, DifferentialExpression
+biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software, DifferentialExpression, OneChannel, TwoChannel, Normalization, QualityControl
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
