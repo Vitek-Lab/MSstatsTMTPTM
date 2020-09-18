@@ -7,7 +7,7 @@
 #' without modification.
 #'
 #' @export
-#' @import dplyr
+#' @importFrom dplyr filter bind_rows distinct inner_join select tibble %>%
 #' @importFrom stats p.adjust xtabs
 #' @importFrom utils read.table write.table
 #' @importFrom MSstatsTMT groupComparisonTMT

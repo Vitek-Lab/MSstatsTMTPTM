@@ -10,7 +10,7 @@
 #' @import ggplot2
 #' @importFrom graphics axis image legend mtext par plot.new title plot
 #' @importFrom grDevices dev.off hcl pdf
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate n
 #' @importFrom reshape2 dcast
 #' @importFrom MSstatsTMT proteinSummarization
 #' @importFrom gridExtra grid.arrange
