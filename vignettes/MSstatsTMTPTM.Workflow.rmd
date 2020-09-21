@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(MSstatsTMTPTM)
 library(MSstatsTMT)
 library(MSstats)
@@ -27,62 +27,76 @@ library(dplyr)
 
 This Vignette provides an example workflow for how to use the package MSstatsTMTPTM. It also provides examples and an analysis of how adjusting for global protein levels allows for better interpretations of PTM modeling results.
 
-## Workflow
+## 1. Workflow
 
-### Raw Data Format
+### 1.1 Raw Data Format
+
+#### 1.1.1 Raw PTM Data
 
 ```{r}
 # read in raw data files
 # raw.ptm <- read.csv(file="raw.ptm.csv", header=TRUE)
-# raw.protein <- read.csv(file="raw.protein.csv", header=TRUE)
 head(raw.ptm)
-head(raw.protein)
 ```
 
-The first step is to load in the raw dataset. This can be the output of the MSstatsTMT converter functions: `PDtoMSstatsTMTFormat`, `MaxQtoMSstatsTMTFormat`, `SpectroMinetoMSstatsTMTFormat`. The dataset must include the columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`. It is important to note the ProteinName column in the PTM dataset (`raw.ptm`). The location of the modification must be added into the ProteinName. For example the first row shows `Protein_4_Y474` for ProteinName, with Y474 being the modificaiton site. This can be done as shown above, or by adding the PeptideSequence into the ProteinName, ex. `Protein_4_Peptide_455` for the first row.
+The first step is to load in the raw dataset for both the PTM and Protein datasets. This can be the output of the MSstatsTMT converter functions: `PDtoMSstatsTMTFormat`, `MaxQtoMSstatsTMTFormat`, `SpectroMinetoMSstatsTMTFormat`. The dataset must include the columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`. It is important to note the `ProteinName` column. The location of the modification must be added into the ProteinName. For example the first row shows `Protein_4_Y474` for ProteinName, with Y474 being the modificaiton site. This can be done as shown above, or by adding the PeptideSequence into the ProteinName, ex. `Protein_4_Peptide_455` for the first row.
 
-
-### proteinSummarization
+#### 1.1.1 Raw Protein Data
 
 ``` {r}
+head(raw.protein)
+# raw.protein <- read.csv(file="raw.protein.csv", header=TRUE)
+```
+
+Load in the raw Protein dataset as well. This is the same as the PTM data, however the `ProteinName` column does not contain a modification site.
+
+### 1.2 proteinSummarization
+
+``` {r, results='hide', message=FALSE, warning=FALSE}
 
 # Use proteinSummarization function from MSstatsTMT to summarize raw data
-# quant.msstats.ptm <- proteinSummarization(raw.ptm,
-#                                           method = "msstats",
-#                                           global_norm = TRUE,
-#                                           reference_norm = FALSE,
-#                                           MBimpute = TRUE)
-# 
-# quant.msstats.protein <- proteinSummarization(raw.protein,
-#                                           method = "msstats",
-#                                           global_norm = TRUE,
-#                                           reference_norm = FALSE,
-#                                           MBimpute = TRUE)
+quant.msstats.ptm <- proteinSummarization(raw.ptm,
+                                          method = "msstats",
+                                          global_norm = TRUE,
+                                          reference_norm = FALSE,
+                                          MBimpute = TRUE)
+
+quant.msstats.protein <- proteinSummarization(raw.protein,
+                                          method = "msstats",
+                                          global_norm = TRUE,
+                                          reference_norm = FALSE,
+                                          MBimpute = TRUE)
+
+```
+
+``` {r}
 head(quant.msstats.ptm)
 head(quant.msstats.protein)
-
 ```
 
 After loading in the input data, the next step is to use the proteinSummarization function from MSstatsTMT. This provides the summarized dataset needed to model the protein/PTM abundance. With the modification site added into the protein name, this function will summarize the data for each PTM.
 
 
-### groupComparisonTMTPTM
+### 1.3 groupComparisonTMTPTM
 
-``` {r}
+``` {r, results='hide', message=FALSE, warning=FALSE}
 
 # test for all the possible pairs of conditions
-# test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-#                                        data.protein=quant.msstats.protein)
+test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+                                       data.protein=quant.msstats.protein)
 
 # Load specific contrast matrix
 # example.comparisons <- read.csv(file="example.comparisons.csv", header=TRUE)
 example.comparisons
 
 # test for specified condition comparisons only
-# test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-#                                        data.protein=quant.msstats.protein,
-#                                        contrast.matrix = example.comparisons)
+test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+                                       data.protein=quant.msstats.protein,
+                                       contrast.matrix = example.comparisons)
 
+```
+
+``` {r}
 names(test.example.comparisons)
 ptm_model <- test.example.comparisons[[1]]
 protein_model <- test.example.comparisons[[2]]
@@ -94,7 +108,7 @@ head(adjusted_model)
 
 The modeling function will return a list consisting of three dataframes. One each for the PTM, Protein, and Adjusted PTM models. Using these dataframes modeling plots can be created using the groupComparisonPlots function from MSstats.
 
-### Example Volcano Plot
+### 1.4 Example Volcano Plot
 
 ``` {r}
 groupComparisonPlots(data = adjusted_model,
@@ -107,9 +121,9 @@ groupComparisonPlots(data = adjusted_model,
 
 The dataframes from the groupComparisonTMTPTM function are compatible with the groupComparisonPlots function from MSstats and the plots can be used to analyze the models.
 
-## Analysis
+## 2. Analysis
 
-### How to adjust PTMs for changes in global protein levels?
+### 2.1 How to adjust PTMs for changes in global protein levels?
 
 First we model both the PTM and global protein datasets with the MSstatsTMT groupcomparison function (as noted by the modeling formula above). The resulting modeling parameters are then combined using the adjustment formulas below:
 
@@ -121,9 +135,7 @@ DF: $(SE_{PTM}^2 + SE_{Protein}^2)^2 \biggm/ (\frac{SE_{PTM}^2}{DF_{PTM}} + \fra
 
 Please see the package MSstatsPTM for further explanation of adjustment strategy and formulas.
 
-### Example PTM
-
-### Added Insight
+### 2.2 Example PTM
 
 ``` {r}
 dataProcessPlotsTMTPTM(data.ptm = raw.ptm,

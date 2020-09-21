@@ -12,12 +12,14 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=6, 
+  fig.height=6
 )
 ```
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(MSstatsTMTPTM)
 library(MSstatsTMT)
 ```
@@ -63,25 +65,33 @@ To illustrate the quantitative data and quality control of MS runs, dataProcessP
 
 ### Example
 
-```{r}
+``` {r}
 # read in raw data files
 # raw.ptm <- read.csv(file="raw.ptm.csv", header=TRUE)
 # raw.protein <- read.csv(file="raw.protein.csv", header=TRUE)
 head(raw.ptm)
 head(raw.protein)
+```
 
-# read in summarized data files (from MSstatsTMT proteinSummarization function)
-# quant.msstats.ptm <- proteinSummarization(raw.ptm,
-#                                           method = "msstats",
-#                                           global_norm = TRUE,
-#                                           reference_norm = FALSE,
-#                                           MBimpute = TRUE)
-# 
-# quant.msstats.protein <- proteinSummarization(raw.protein,
-#                                           method = "msstats",
-#                                           global_norm = TRUE,
-#                                           reference_norm = FALSE,
-#                                           MBimpute = TRUE)
+```{r, results='hide', message=FALSE, warning=FALSE}
+# Run MSstatsTMT proteinSummarization function
+quant.msstats.ptm <- proteinSummarization(raw.ptm,
+                                          method = "msstats",
+                                          global_norm = TRUE,
+                                          reference_norm = FALSE,
+                                          MBimpute = TRUE)
+
+quant.msstats.protein <- proteinSummarization(raw.protein,
+                                          method = "msstats",
+                                          global_norm = TRUE,
+                                          reference_norm = FALSE,
+                                          MBimpute = TRUE)
+
+
+
+```
+
+``` {r}
 head(quant.msstats.ptm)
 head(quant.msstats.protein)
 
@@ -91,7 +101,9 @@ dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
                     data.ptm.summarization=quant.msstats.ptm,
                     data.protein.summarization=quant.msstats.protein,
                     which.Protein = 1,
-                    type='ProfilePlot')
+                    type='ProfilePlot',
+                    address = FALSE
+                    )
 
 # Quality Control Plot
 # dataProcessPlotsTMTPTM(data.ptm=ptm.input.pd,
@@ -101,7 +113,6 @@ dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
 #                     type='QCPlot')
 
 ```
-
 
 ### 3. groupComparisonTMTPTM()
 
@@ -119,21 +130,21 @@ Tests for significant changes in PTM abundance adjusted for global protein abund
 
 ```{r message = FALSE, warning = FALSE}
 # test for all the possible pairs of conditions
-# test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-#                                        data.protein=quant.msstats.protein)
+test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+                                       data.protein=quant.msstats.protein)
 names(test.pairwise)
 head(test.pairwise[[1]])
 
 # Load specific contrast matrix
-# example.comparisons <- read.csv(file="example.comparisons.csv", header=TRUE)
+#example.comparisons <- read.csv(file="example.comparisons.csv", header=TRUE)
 example.comparisons
 
 # test for specified condition comparisons only
-# test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
-#                                        data.protein=quant.msstats.protein,
-#                                        contrast.matrix = example.comparisons)
+test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+                                       data.protein=quant.msstats.protein,
+                                       contrast.matrix = example.comparisons)
 
-names(test.pairwise)
-head(test.pairwise[[1]])
+names(test.example.comparisons)
+head(test.example.comparisons[[1]])
 ```
 
