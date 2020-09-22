@@ -15,7 +15,7 @@ License: Artistic-2.0
 Depends: R (>= 4.0)
 Imports: dplyr, gridExtra, stringr, reshape2, stats, utils, 
           ggplot2, grDevices, graphics, MSstatsTMT
-Suggests: BiocStyle, knitr, rmarkdown, testthat
+Suggests: BiocStyle, knitr, rmarkdown, testthat, MSstats
 VignetteBuilder: knitr
 biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software, DifferentialExpression, OneChannel, TwoChannel, Normalization, QualityControl
 Encoding: UTF-8

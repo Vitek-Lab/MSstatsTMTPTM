@@ -31,6 +31,8 @@ This Vignette provides an example workflow for how to use the package MSstatsTMT
 
 ### 1.1 Raw Data Format
 
+The first step is to load in the raw dataset for both the PTM and Protein datasets. This can be the output of the MSstatsTMT converter functions: `SpectroMinetoMSstatsTMTFormat`, and `OpenMStoMSstatsTMTFormat`. Both datasets must include the following columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`.
+
 #### 1.1.1 Raw PTM Data
 
 ```{r}
@@ -39,7 +41,7 @@ This Vignette provides an example workflow for how to use the package MSstatsTMT
 head(raw.ptm)
 ```
 
-The first step is to load in the raw dataset for both the PTM and Protein datasets. This can be the output of the MSstatsTMT converter functions: `PDtoMSstatsTMTFormat`, `MaxQtoMSstatsTMTFormat`, `SpectroMinetoMSstatsTMTFormat`. The dataset must include the columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`. It is important to note the `ProteinName` column. The location of the modification must be added into the ProteinName. For example the first row shows `Protein_4_Y474` for ProteinName, with Y474 being the modificaiton site. This can be done as shown above, or by adding the PeptideSequence into the ProteinName, ex. `Protein_4_Peptide_455` for the first row.
+It is important to note the `ProteinName` column in the PTM dataset represents the modification sites. The location of the modification must be added into the `ProteinName`. For example the first row shows `Protein_4_Y474` for ProteinName, with Y474 being the modificaiton site. This can be done as shown above, or by adding the PeptideSequence into the ProteinName, ex. `Protein_4_Peptide_455` for the first row.
 
 #### 1.1.1 Raw Protein Data
 
@@ -48,9 +50,11 @@ head(raw.protein)
 # raw.protein <- read.csv(file="raw.protein.csv", header=TRUE)
 ```
 
-Load in the raw Protein dataset as well. This is the same as the PTM data, however the `ProteinName` column does not contain a modification site.
+The raw Protein dataset looks similar to the PTM dataset, however the `ProteinName` column does not contain a modification site.
 
 ### 1.2 proteinSummarization
+
+After loading in the input data, the next step is to use the proteinSummarization function from MSstatsTMT. This provides the summarized dataset needed to model the protein/PTM abundance. The function will summarize the Protein dataset up to the protein level and will summarize the PTM dataset up to the PTM level. The different summarizations are caused by adding the PTM site into the `ProteinName` field.
 
 ``` {r, results='hide', message=FALSE, warning=FALSE}
 
@@ -74,10 +78,10 @@ head(quant.msstats.ptm)
 head(quant.msstats.protein)
 ```
 
-After loading in the input data, the next step is to use the proteinSummarization function from MSstatsTMT. This provides the summarized dataset needed to model the protein/PTM abundance. With the modification site added into the protein name, this function will summarize the data for each PTM.
-
 
 ### 1.3 groupComparisonTMTPTM
+
+After the two datasets are summarized, they can be used in the modeling function `groupComparisonTMTPTM`.
 
 ``` {r, results='hide', message=FALSE, warning=FALSE}
 
@@ -106,9 +110,11 @@ head(adjusted_model)
 
 ```
 
-The modeling function will return a list consisting of three dataframes. One each for the PTM, Protein, and Adjusted PTM models. Using these dataframes modeling plots can be created using the groupComparisonPlots function from MSstats.
+The modeling function will return a list consisting of three dataframes. One each for the PTM, Protein, and Adjusted PTM models.
 
 ### 1.4 Example Volcano Plot
+
+The models from the `groupComparisonTMTPTM` function can be used in the model visualization function, `groupComparisonPlots`, from the base MSstats. Below is a Volcano Plot for the Adjusted PTM model.
 
 ``` {r}
 groupComparisonPlots(data = adjusted_model,
@@ -119,13 +125,13 @@ groupComparisonPlots(data = adjusted_model,
 
 ```
 
-The dataframes from the groupComparisonTMTPTM function are compatible with the groupComparisonPlots function from MSstats and the plots can be used to analyze the models.
+
 
 ## 2. Analysis
 
 ### 2.1 How to adjust PTMs for changes in global protein levels?
 
-First we model both the PTM and global protein datasets with the MSstatsTMT groupcomparison function (as noted by the modeling formula above). The resulting modeling parameters are then combined using the adjustment formulas below:
+In order to adjust the PTM abundance for global protein abundance there are two main steps. First the PTM and global protein datasets must be modeled and then the resulting model parameters are combined. The combination is done using the formulas below:
 
 Log2FC: $\log_2FC_{PTM} - \log_2FC_{Protein}$
 
@@ -143,34 +149,34 @@ dataProcessPlotsTMTPTM(data.ptm = raw.ptm,
                        data.ptm.summarization = quant.msstats.ptm,
                        data.protein.summarization = quant.msstats.protein,
                        type = 'ProfilePlot',
-                       which.Protein = 2,
+                       which.Protein = 'Protein_2391_Y40',
                        address = FALSE)
 
 ```
 
-In the plots above the data points for the PTM `Protein_1145_T915` and Protein `Protein_1145` are shown for all conditions. To take a look at a specific comparison, the input data can be filtered.
+In the plots above the data points for the PTM `Protein_2391_Y40` and Protein `Protein_2391` are shown for all conditions. To take a look at a specific comparison, the input data can be filtered.
 
 ``` {r}
-dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
-                       data.protein = raw.protein %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
-                       data.ptm.summarization = quant.msstats.ptm %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
-                       data.protein.summarization = quant.msstats.protein %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
+dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
+                       data.protein = raw.protein %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
+                       data.ptm.summarization = quant.msstats.ptm %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
+                       data.protein.summarization = quant.msstats.protein %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
                        type = 'ProfilePlot',
-                       which.Protein = 'Protein_1145_T915',
+                       which.Protein = 'Protein_2391_Y40',
                        originalPlot = FALSE,
                        address = FALSE)
 
-model_df <- rbind(adjusted_model %>% filter(Protein == 'Protein_1145_T915' & Label == '2-5') %>% select(-Tvalue),
-                  ptm_model %>% filter(Protein == 'Protein_1145_T915' & Label == '2-5') %>% select(-issue),
-                  protein_model %>% filter(Protein == 'Protein_1145' & Label == '2-5') %>% select(-issue))
+model_df <- rbind(adjusted_model %>% filter(Protein == 'Protein_2391_Y40' & Label == '1-4') %>% select(-Tvalue),
+                  ptm_model %>% filter(Protein == 'Protein_2391_Y40' & Label == '1-4') %>% select(-issue),
+                  protein_model %>% filter(Protein == 'Protein_2391' & Label == '1-4') %>% select(-issue))
 
 rownames(model_df) <- c('Adjusted PTM', 'PTM', 'Protein')
 model_df
 ```
 
-The example above shows the added insight of adjusting for Protein level. Originally the PTM model shows a slight log2FC of -0.425. However, the global protein level changed in the opposite direction at 0.508. When the PTM is adjusted for the global the log2FC is now -0.932 which is a much larger change than without adjustment. The change in abundance of this PTM may have been marked as insignificant without adjusting for protein levels. Note the change in SE and DF once the PTM model is adjusted.
+The example above shows the added insight of adjusting for Protein level. Originally the PTM model shows a small positive log2FC of 0.144. However, the global protein abundance changed strongly in the negative direction, -0.508. When the PTM is adjusted for the global the log2FC is increased to 0.652, which is a much larger absolute change than without adjustment. The change in abundance of this PTM may have been marked as insignificant without adjusting for protein levels. Note the change in SE and DF once the PTM model is adjusted.
 
-Additionally, log2FC can be reduced after adjustment.
+Additionally, there are other situations where the PTM log2FC will be reduced after adjustment.
 
 ``` {r}
 dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
@@ -190,7 +196,9 @@ rownames(model_df) <- c('Adjusted PTM', 'PTM', 'Protein')
 model_df
 ```
 
-In this example the PTM model originally showed a large log2FC of 0.242, however most of this FC was a result of the global protein which was 0.356. Once adjusted, the PTM shows a much smalled FC of -0.114. Without adjustment a potentially incorrect inference could have been drawn for this PTM.
+In this example the PTM model originally showed a large log2FC of 0.242, however most of this FC was due to the global protein abundance change which was 0.356. Once adjusted, the PTM shows a much smaller FC of -0.114. Without adjustment a potentially incorrect inference could have been drawn for this PTM.
+
+From these two examples the added insight into PTM abundance change from protein adjustment can be observed. If the goal of the experiment is to find the true abundance change due to PTMs than removing the effect of the protein is very important.
 
 
 

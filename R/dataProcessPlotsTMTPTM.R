@@ -1,10 +1,13 @@
 #' Visualization for explanatory data analysis - TMT experiment
 #'
 #' To illustrate the quantitative data and quality control of MS runs,
-#' dataProcessPlotsTMT takes the quantitative data from MSstatsTMT converter functions as input
+#' dataProcessPlotsTMT takes the quantitative data from MSstatsTMT converter
+#' functions as input
 #' and generate two types of figures in pdf files as output :
-#' (1) profile plot (specify "ProfilePlot" in option type), to identify the potential sources of variation for each protein;
-#' (2) quality control plot (specify "QCPlot" in option type), to evaluate the systematic bias between MS runs.
+#' (1) profile plot (specify "ProfilePlot" in option type), to identify the
+#' potential sources of variation for each protein;
+#' (2) quality control plot (specify "QCPlot" in option type), to evaluate the
+#' systematic bias between MS runs.
 #'
 #' @export
 #' @import ggplot2
@@ -14,34 +17,53 @@
 #' @importFrom reshape2 dcast
 #' @importFrom MSstatsTMT proteinSummarization
 #' @importFrom gridExtra grid.arrange
-#' @param data.ptm name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions.
-#' @param data.protein name of the data with peptide level, which can be the output of MSstatsTMT converter functions.
-#' @param data.ptm.summarization name of the data with ptm sites in protein-level name, which can be the output of
-#' the MSstatsTMT \code{\link{proteinSummarization}} function.
-#' @param data.protein.summarization name of the data with protein-level, which can be the output of the
-#' MSstatsTMT \code{\link{proteinSummarization}} function.
-#' @param type choice of visualization. "ProfilePlot" represents profile plot of log intensities across MS runs.
+#' @param data.ptm name of the data with PTM sites in protein name, which can be
+#'  the output of MSstatsTMT converter functions.
+#' @param data.protein name of the data with peptide level, which can be the
+#' output of MSstatsTMT converter functions.
+#' @param data.ptm.summarization name of the data with ptm sites in
+#' protein-level name, which can be the output of
+#' the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function.
+#' @param data.protein.summarization name of the data with protein-level, which
+#' can be the output of the
+#' MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function.
+#' @param type choice of visualization. "ProfilePlot" represents profile plot of
+#'  log intensities across MS runs.
 #' "QCPlot" represents box plots of log intensities across channels and MS runs.
 #' @param ylimUp upper limit for y-axis in the log scale.
-#' FALSE(Default) for Profile Plot and QC Plot uses the upper limit as rounded off maximum of log2(intensities) after normalization + 3..
-#' @param ylimDown lower limit for y-axis in the log scale. FALSE(Default) for Profile Plot and QC Plot uses 0..
-#' @param x.axis.size size of x-axis labeling for "Run" and "channel in Profile Plot and QC Plot.
+#' FALSE(Default) for Profile Plot and QC Plot uses the upper limit as rounded
+#' off maximum of log2(intensities) after normalization + 3..
+#' @param ylimDown lower limit for y-axis in the log scale. FALSE(Default) for
+#' Profile Plot and QC Plot uses 0..
+#' @param x.axis.size size of x-axis labeling for "Run" and "channel in Profile
+#' Plot and QC Plot.
 #' @param y.axis.size size of y-axis labels. Default is 10.
-#' @param text.size size of labels represented each condition at the top of Profile plot and QC plot. Default is 4.
-#' @param text.angle angle of labels represented each condition at the top of Profile plot and QC plot. Default is 0.
+#' @param text.size size of labels represented each condition at the top of
+#' Profile plot and QC plot. Default is 4.
+#' @param text.angle angle of labels represented each condition at the top of
+#' Profile plot and QC plot. Default is 0.
 #' @param legend.size size of legend above Profile plot. Default is 7.
 #' @param dot.size.profile size of dots in Profile plot. Default is 2.
-#' @param ncol.guide number of columns for legends at the top of plot. Default is 5.
+#' @param ncol.guide number of columns for legends at the top of plot. Default
+#' is 5.
 #' @param width width of the saved pdf file. Default is 10.
 #' @param height height of the saved pdf file. Default is 10.
-#' @param which.Protein Protein list to draw plots. List can be names of Proteins or order numbers of Proteins.
-#' Default is "all", which generates all plots for each protein. For QC plot, "allonly" will generate one QC plot with all proteins.
-#' @param originalPlot TRUE(default) draws original profile plots, without normalization.
-#' @param summaryPlot TRUE(default) draws profile plots with protein summarization for each channel and MS run.
-#' @param address the name of folder that will store the results. Default folder is the current working directory.
-#' The other assigned folder has to be existed under the current working directory.
-#' An output pdf file is automatically created with the default name of "ProfilePlot.pdf" or "QCplot.pdf".
-#' The command address can help to specify where to store the file as well as how to modify the beginning of the file name.
+#' @param which.Protein Protein list to draw plots. List can be names of
+#' Proteins or order numbers of Proteins.
+#' Default is "all", which generates all plots for each protein. For QC plot,
+#' "allonly" will generate one QC plot with all proteins.
+#' @param originalPlot TRUE(default) draws original profile plots, without
+#' normalization.
+#' @param summaryPlot TRUE(default) draws profile plots with protein
+#' summarization for each channel and MS run.
+#' @param address the name of folder that will store the results. Default folder
+#'  is the current working directory.
+#' The other assigned folder has to be existed under the current working
+#' directory.
+#' An output pdf file is automatically created with the default name of
+#' "ProfilePlot.pdf" or "QCplot.pdf".
+#' The command address can help to specify where to store the file as well as
+#' how to modify the beginning of the file name.
 #' If address=FALSE, plot will be not saved as pdf file but showed in window.
 #' @return plot or pdf
 #' @examples
@@ -109,7 +131,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
   }
 
   processout <- rbind(processout,
-                      as.matrix(c(" ", " ", "MSstatsTMTPTM - dataProcessPlotsTMTPTM function", " "), ncol=1))
+                      as.matrix(c(" ", " ", "MSstatsTMTPTM -
+                                  dataProcessPlotsTMTPTM function", " "),
+                                ncol=1))
 
   ## Checking for input variables
   type <- toupper(type)
@@ -118,7 +142,8 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
     processout <- rbind(processout,
                         c(paste0("Input for type=", type,
-                                 ". However,'type' should be one of ProfilePlot, QCPlot.")))
+                                 ". However,'type' should be one of ProfilePlot,
+                                 QCPlot.")))
     write.table(processout, file=finalfile, row.names=FALSE)
 
     stop(paste0("Input for type=", type,
@@ -144,10 +169,14 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
   run.conds.ptm <- as.character(unique(datarun.ptm$Condition))
 
   # only keep the overlapped conditions between feature data and protein data
-  shared.conds <- Reduce(intersect, list(fea.conds.protein, fea.conds.ptm, run.conds.protein, run.conds.ptm))
-  datafeature.protein <- datafeature.protein[datafeature.protein$Condition %in% shared.conds,]
-  datafeature.ptm <- datafeature.ptm[datafeature.ptm$Condition %in% shared.conds,]
-  datarun.protein <- datarun.protein[datarun.protein$Condition %in% shared.conds,]
+  shared.conds <- Reduce(intersect, list(fea.conds.protein, fea.conds.ptm,
+                                         run.conds.protein, run.conds.ptm))
+  datafeature.protein <- datafeature.protein[datafeature.protein$Condition
+                                             %in% shared.conds,]
+  datafeature.ptm <- datafeature.ptm[datafeature.ptm$Condition %in% shared.conds
+                                     ,]
+  datarun.protein <- datarun.protein[datarun.protein$Condition %in% shared.conds
+                                     ,]
   datarun.ptm <- datarun.ptm[datarun.ptm$Condition %in% shared.conds,]
 
   # make sure condition is factor
@@ -158,10 +187,13 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
   ## Remove Site from protein name
   regex_protein <- '([^-]+)(?:_[^-]+){1}$'
-  datafeature.ptm <- datafeature.ptm %>% mutate(GlobalProtein = str_match(ProteinName, regex_protein)[,2])
+  datafeature.ptm <- datafeature.ptm %>% mutate(GlobalProtein = str_match(
+    ProteinName, regex_protein)[,2])
 
-  colnames(datafeature.protein)[colnames(datafeature.protein) == 'ProteinName'] <- 'Protein'
-  colnames(datafeature.ptm)[colnames(datafeature.ptm) == 'ProteinName'] <- 'Protein'
+  colnames(datafeature.protein)[colnames(datafeature.protein) == 'ProteinName'
+                                ] <- 'Protein'
+  colnames(datafeature.ptm)[colnames(datafeature.ptm) == 'ProteinName'
+                            ] <- 'Protein'
 
   datafeature.protein$Protein <- factor(datafeature.protein$Protein)
   datafeature.ptm$Protein <- factor(datafeature.ptm$Protein)
@@ -178,17 +210,22 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
   datarun.ptm[!is.na(datarun.ptm$Intensity) &
                 datarun.ptm$Intensity < 1, 'abundance'] <- 0
 
-  if (length(setdiff(toupper(type), c(toupper("ProfilePlot"), toupper("QCPlot")))) != 0) {
+  if (length(setdiff(toupper(type), c(toupper("ProfilePlot"), toupper("QCPlot")
+                                      ))) != 0) {
     stop(paste0("Input for type=", type,
-                ". However,'type' should be one of \"ProfilePlot\", \"QCPlot\"."))
+                ". However,'type' should be one of \"ProfilePlot\", \"QCPlot\"."
+                ))
   }
 
   if (address == FALSE){
-    ## here I used == FALSE, instead of !address. Because address can be logical or characters.
+    ## here I used == FALSE, instead of !address. Because address can be logical
+    ## or characters.
     if (which.Protein == 'all') {
-      stop('** Cannnot generate all plots in a screen. Please set one protein at a time.')
+      stop('** Cannnot generate all plots in a screen. Please set one protein
+           at a time.')
     } else if (length(which.Protein) > 1) {
-      stop('** Cannnot generate multiple plots in a screen. Please set one protein at a time.')
+      stop('** Cannnot generate multiple plots in a screen. Please set one
+           protein at a time.')
     }
   }
 
@@ -224,21 +261,26 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
       }
 
       ## use only assigned proteins
-      datafeature.ptm <- datafeature.ptm[which(datafeature.ptm$Protein %in% temp.name), ]
-      temp_proteins <- as.character((datafeature.ptm %>% distinct(GlobalProtein))[[1]])
+      datafeature.ptm <- datafeature.ptm[which(datafeature.ptm$Protein %in%
+                                                 temp.name), ]
+      temp_proteins <- as.character((datafeature.ptm %>% distinct(GlobalProtein)
+                                     )[[1]])
       datafeature.ptm$Protein <- factor(datafeature.ptm$Protein)
 
-      datafeature.protein <- datafeature.protein[which(datafeature.protein$Protein %in% temp_proteins), ]
+      datafeature.protein <- datafeature.protein[which(
+        datafeature.protein$Protein %in% temp_proteins), ]
       datafeature.protein$Protein <- factor(datafeature.protein$Protein)
 
-      datarun.protein <- datarun.protein[which(datarun.protein$Protein %in% temp_proteins), ]
+      datarun.protein <- datarun.protein[which(datarun.protein$Protein %in%
+                                                 temp_proteins), ]
       datarun.ptm <- datarun.ptm[which(datarun.ptm$Protein %in% temp.name), ]
       datarun.protein$Protein <- factor(datarun.protein$Protein)
       datarun.ptm$Protein <- factor(datarun.ptm$Protein)
     }
 
     ## assign upper or lower limit
-    y.limup <- ceiling(max(datafeature.protein$abundance, datafeature.ptm$abundance, na.rm = TRUE) + 5)
+    y.limup <- ceiling(max(datafeature.protein$abundance,
+                           datafeature.ptm$abundance, na.rm = TRUE) + 5)
 
     if (is.numeric(ylimUp)) {
       y.limup <- ylimUp
@@ -249,8 +291,10 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
       y.limdown <- ylimDown
     }
 
-    datafeature.protein <- datafeature.protein[with(datafeature.protein, order(Run, Condition, Channel)), ]
-    datafeature.ptm <- datafeature.ptm[with(datafeature.ptm, order(Run, Condition, Channel)), ]
+    datafeature.protein <- datafeature.protein[with(datafeature.protein, order(
+      Run, Condition, Channel)), ]
+    datafeature.ptm <- datafeature.ptm[with(datafeature.ptm, order(
+      Run, Condition, Channel)), ]
     datafeature.protein$Run <- factor(datafeature.protein$Run)
     datafeature.ptm$Run <- factor(datafeature.ptm$Run)
     datarun.protein$Run <- factor(datarun.protein$Run)
@@ -259,8 +303,11 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
     ## !! important: order of x-axis
     ## can be reorder by group and then channel, WITHIN Run
     ## first make new column for x-axis
-    datafeature.protein$group.channel <- paste(datafeature.protein$Condition, datafeature.protein$Channel, sep = "_")
-    datafeature.ptm$group.channel <- paste(datafeature.ptm$Condition, datafeature.ptm$Channel, sep = "_")
+    datafeature.protein$group.channel <- paste(datafeature.protein$Condition,
+                                               datafeature.protein$Channel,
+                                               sep = "_")
+    datafeature.ptm$group.channel <- paste(datafeature.ptm$Condition,
+                                           datafeature.ptm$Channel, sep = "_")
 
     ## not sure better way for coding
     ## potentially change it.
@@ -270,22 +317,29 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
     for (k in seq_along(unique(datafeature.protein$Run))) {
 
       runid <- unique(datafeature.protein$Run)[k]
-      datafeature.protein[datafeature.protein$Run == runid, ]$xorder <- factor(datafeature.protein[datafeature.protein$Run == runid, ]$group.channel,
-                                                               levels <- unique(datafeature.protein[datafeature.protein$Run == runid, ]$group.channel),
-                                                               labels <- seq(1, length(unique(datafeature.protein[datafeature.protein$Run == runid, ]$group.channel))))
+      datafeature.protein[datafeature.protein$Run == runid, ]$xorder <- factor(
+        datafeature.protein[datafeature.protein$Run == runid, ]$group.channel,
+        levels <- unique(datafeature.protein[datafeature.protein$Run == runid,
+                                             ]$group.channel),
+        labels <- seq(1, length(unique(datafeature.protein[
+          datafeature.protein$Run == runid, ]$group.channel))))
     }
 
     for (k in seq_along(unique(datafeature.ptm$Run))) {
 
       runid <- unique(datafeature.ptm$Run)[k]
-      datafeature.ptm[datafeature.ptm$Run == runid, ]$xorder <- factor(datafeature.ptm[datafeature.ptm$Run == runid, ]$group.channel,
-                                                                               levels <- unique(datafeature.ptm[datafeature.ptm$Run == runid, ]$group.channel),
-                                                                               labels <- seq(1, length(unique(datafeature.ptm[datafeature.ptm$Run == runid, ]$group.channel))))
+      datafeature.ptm[datafeature.ptm$Run == runid, ]$xorder <- factor(
+        datafeature.ptm[datafeature.ptm$Run == runid, ]$group.channel,
+        levels <- unique(datafeature.ptm[datafeature.ptm$Run == runid,
+                                         ]$group.channel),
+        labels <- seq(1, length(unique(datafeature.ptm[
+          datafeature.ptm$Run == runid, ]$group.channel))))
     }
 
 
     ## check
-    ## unique(datafeature[datafeature$Run == '5', c('Channel', 'Condition', 'Run', 'xorder','group.channel')])
+    ## unique(datafeature[datafeature$Run == '5', c('Channel', 'Condition',
+    ## 'Run', 'xorder','group.channel')])
 
     ## need to make data.frame with same variables for condition name
     datafeature.protein$xorder <- as.numeric(datafeature.protein$xorder)

@@ -13,10 +13,10 @@ groupComparisonTMTPTM(
 )
 }
 \arguments{
-\item{data.ptm}{Name of the output of proteinSummarization function with PTM data. It should have columns named
+\item{data.ptm}{Name of the output of the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function with PTM data. It should have columns named
 \code{Protein}, \code{TechRepMixture},  \code{Mixture}, \code{Run}, \code{Channel}, \code{Condition}, \code{BioReplicate}, \code{Abundance}.}
 
-\item{data.protein}{Protein dataset returned by the proteinSummarization function}
+\item{data.protein}{Protein dataset returned by the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function}
 
 \item{contrast.matrix}{Comparison between conditions of interests.
 1) default is 'pairwise', which compare all possible pairs between two conditions.

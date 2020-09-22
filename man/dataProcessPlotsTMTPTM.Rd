@@ -28,53 +28,72 @@ dataProcessPlotsTMTPTM(
 )
 }
 \arguments{
-\item{data.ptm}{name of the data with PTM sites in protein name, which can be the output of MSstatsTMT converter functions.}
+\item{data.ptm}{name of the data with PTM sites in protein name, which can be
+the output of MSstatsTMT converter functions.}
 
-\item{data.protein}{name of the data with peptide level, which can be the output of MSstatsTMT converter functions.}
+\item{data.protein}{name of the data with peptide level, which can be the
+output of MSstatsTMT converter functions.}
 
-\item{data.ptm.summarization}{name of the data with ptm sites in protein-level name, which can be the output of
-the MSstatsTMT \code{\link{proteinSummarization}} function.}
+\item{data.ptm.summarization}{name of the data with ptm sites in
+protein-level name, which can be the output of
+the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function.}
 
-\item{data.protein.summarization}{name of the data with protein-level, which can be the output of the
-MSstatsTMT \code{\link{proteinSummarization}} function.}
+\item{data.protein.summarization}{name of the data with protein-level, which
+can be the output of the
+MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function.}
 
-\item{type}{choice of visualization. "ProfilePlot" represents profile plot of log intensities across MS runs.
+\item{type}{choice of visualization. "ProfilePlot" represents profile plot of
+log intensities across MS runs.
 "QCPlot" represents box plots of log intensities across channels and MS runs.}
 
 \item{ylimUp}{upper limit for y-axis in the log scale.
-FALSE(Default) for Profile Plot and QC Plot uses the upper limit as rounded off maximum of log2(intensities) after normalization + 3..}
+FALSE(Default) for Profile Plot and QC Plot uses the upper limit as rounded
+off maximum of log2(intensities) after normalization + 3..}
 
-\item{ylimDown}{lower limit for y-axis in the log scale. FALSE(Default) for Profile Plot and QC Plot uses 0..}
+\item{ylimDown}{lower limit for y-axis in the log scale. FALSE(Default) for
+Profile Plot and QC Plot uses 0..}
 
-\item{x.axis.size}{size of x-axis labeling for "Run" and "channel in Profile Plot and QC Plot.}
+\item{x.axis.size}{size of x-axis labeling for "Run" and "channel in Profile
+Plot and QC Plot.}
 
 \item{y.axis.size}{size of y-axis labels. Default is 10.}
 
-\item{text.size}{size of labels represented each condition at the top of Profile plot and QC plot. Default is 4.}
+\item{text.size}{size of labels represented each condition at the top of
+Profile plot and QC plot. Default is 4.}
 
-\item{text.angle}{angle of labels represented each condition at the top of Profile plot and QC plot. Default is 0.}
+\item{text.angle}{angle of labels represented each condition at the top of
+Profile plot and QC plot. Default is 0.}
 
 \item{legend.size}{size of legend above Profile plot. Default is 7.}
 
 \item{dot.size.profile}{size of dots in Profile plot. Default is 2.}
 
-\item{ncol.guide}{number of columns for legends at the top of plot. Default is 5.}
+\item{ncol.guide}{number of columns for legends at the top of plot. Default
+is 5.}
 
 \item{width}{width of the saved pdf file. Default is 10.}
 
 \item{height}{height of the saved pdf file. Default is 10.}
 
-\item{which.Protein}{Protein list to draw plots. List can be names of Proteins or order numbers of Proteins.
-Default is "all", which generates all plots for each protein. For QC plot, "allonly" will generate one QC plot with all proteins.}
+\item{which.Protein}{Protein list to draw plots. List can be names of
+Proteins or order numbers of Proteins.
+Default is "all", which generates all plots for each protein. For QC plot,
+"allonly" will generate one QC plot with all proteins.}
 
-\item{originalPlot}{TRUE(default) draws original profile plots, without normalization.}
+\item{originalPlot}{TRUE(default) draws original profile plots, without
+normalization.}
 
-\item{summaryPlot}{TRUE(default) draws profile plots with protein summarization for each channel and MS run.}
+\item{summaryPlot}{TRUE(default) draws profile plots with protein
+summarization for each channel and MS run.}
 
-\item{address}{the name of folder that will store the results. Default folder is the current working directory.
-The other assigned folder has to be existed under the current working directory.
-An output pdf file is automatically created with the default name of "ProfilePlot.pdf" or "QCplot.pdf".
-The command address can help to specify where to store the file as well as how to modify the beginning of the file name.
+\item{address}{the name of folder that will store the results. Default folder
+is the current working directory.
+The other assigned folder has to be existed under the current working
+directory.
+An output pdf file is automatically created with the default name of
+"ProfilePlot.pdf" or "QCplot.pdf".
+The command address can help to specify where to store the file as well as
+how to modify the beginning of the file name.
 If address=FALSE, plot will be not saved as pdf file but showed in window.}
 }
 \value{
@@ -82,10 +101,13 @@ plot or pdf
 }
 \description{
 To illustrate the quantitative data and quality control of MS runs,
-dataProcessPlotsTMT takes the quantitative data from MSstatsTMT converter functions as input
+dataProcessPlotsTMT takes the quantitative data from MSstatsTMT converter
+functions as input
 and generate two types of figures in pdf files as output :
-(1) profile plot (specify "ProfilePlot" in option type), to identify the potential sources of variation for each protein;
-(2) quality control plot (specify "QCPlot" in option type), to evaluate the systematic bias between MS runs.
+(1) profile plot (specify "ProfilePlot" in option type), to identify the
+potential sources of variation for each protein;
+(2) quality control plot (specify "QCPlot" in option type), to evaluate the
+systematic bias between MS runs.
 }
 \examples{
 data(raw.ptm)

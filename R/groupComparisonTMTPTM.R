@@ -12,9 +12,9 @@
 #' @importFrom utils read.table write.table
 #' @importFrom MSstatsTMT groupComparisonTMT
 #' @importFrom stringr str_match
-#' @param data.ptm Name of the output of proteinSummarization function with PTM data. It should have columns named
+#' @param data.ptm Name of the output of the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function with PTM data. It should have columns named
 #'                   `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
-#' @param data.protein Protein dataset returned by the proteinSummarization function
+#' @param data.protein Protein dataset returned by the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function
 #' @param contrast.matrix Comparison between conditions of interests.
 #'                        1) default is 'pairwise', which compare all possible pairs between two conditions.
 #'                        2) Otherwise, users can specify the comparisons of interest. Based on the levels of conditions,
