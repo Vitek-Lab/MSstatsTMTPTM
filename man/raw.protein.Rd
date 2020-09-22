@@ -11,9 +11,11 @@ A data frame with 620476 rows and 11 variables.
 raw.protein
 }
 \description{
-It can be the output of PDtoMSstatsTMTFormat or other MSstatsTMT converter functions.
+It can be the output of PDtoMSstatsTMTFormat or other MSstatsTMT converter
+functions.
 It includes peak intensities for a variety of PTMs.
-This is the companion file to the raw.ptm dataset, includes unmodified protein data.
+This is the companion file to the raw.ptm dataset, includes unmodified
+protein data.
 The variables are as follows:
 }
 \details{
@@ -22,8 +24,11 @@ The variables are as follows:
 \item PeptideSequence
 \item Charge
 \item PSM
-\item Mixture : Mixture of samples labeled with different TMT reagents, which can be analyzed in
-a single mass spectrometry experiment. If the channal doesn't have sample, please add \verb{Empty' under Condition. \\item TechRepMixture : Technical replicate of one mixture. One mixture may have multiple technical replicates. For example, if }TechRepMixture' = 1, 2 are the two technical replicates of one mixture, then they should match
+\item Mixture : Mixture of samples labeled with different TMT reagents,
+which can be analyzed in
+a single mass spectrometry experiment. If the channal doesn't have sample,
+please add \verb{Empty' under Condition. \\item TechRepMixture : Technical replicate of one mixture. One mixture may have multiple technical replicates. For example, if }TechRepMixture' = 1, 2 are the two technical replicates of
+one mixture, then they should match
 with same \verb{Mixture' value. \\item Run : MS run ID. \\item Channel : Labeling information (126, ... 131). \\item Condition : Condition (ex. Healthy, Cancer, Time0) \\item BioReplicate : Unique ID for biological subject. If the channal doesn't have sample, please add }Empty' under BioReplicate.
 \item Intensity
 }

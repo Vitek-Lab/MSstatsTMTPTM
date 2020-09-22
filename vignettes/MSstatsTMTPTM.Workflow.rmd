@@ -157,18 +157,28 @@ dataProcessPlotsTMTPTM(data.ptm = raw.ptm,
 In the plots above the data points for the PTM `Protein_2391_Y40` and Protein `Protein_2391` are shown for all conditions. To take a look at a specific comparison, the input data can be filtered.
 
 ``` {r}
-dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
-                       data.protein = raw.protein %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
-                       data.ptm.summarization = quant.msstats.ptm %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
-                       data.protein.summarization = quant.msstats.protein %>% filter(Condition %in% c('Condition_1', 'Condition_4')),
+dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(
+  Condition %in% c('Condition_1', 'Condition_4')),
+                       data.protein = raw.protein %>% filter(
+                         Condition %in% c('Condition_1', 'Condition_4')),
+                       data.ptm.summarization = quant.msstats.ptm %>% filter(
+                         Condition %in% c('Condition_1', 'Condition_4')),
+                       data.protein.summarization = 
+    quant.msstats.protein %>% filter(Condition %in% c(
+      'Condition_1', 'Condition_4')),
                        type = 'ProfilePlot',
                        which.Protein = 'Protein_2391_Y40',
                        originalPlot = FALSE,
                        address = FALSE)
 
-model_df <- rbind(adjusted_model %>% filter(Protein == 'Protein_2391_Y40' & Label == '1-4') %>% select(-Tvalue),
-                  ptm_model %>% filter(Protein == 'Protein_2391_Y40' & Label == '1-4') %>% select(-issue),
-                  protein_model %>% filter(Protein == 'Protein_2391' & Label == '1-4') %>% select(-issue))
+model_df <- rbind(adjusted_model %>% filter(
+  Protein == 'Protein_2391_Y40' & Label == '1-4') %>% select(-Tvalue),
+                  ptm_model %>% filter(
+                    Protein == 'Protein_2391_Y40' & Label == '1-4'
+                    ) %>% select(-issue),
+                  protein_model %>% filter(
+                    Protein == 'Protein_2391' & Label == '1-4'
+                    ) %>% select(-issue))
 
 rownames(model_df) <- c('Adjusted PTM', 'PTM', 'Protein')
 model_df
@@ -179,18 +189,27 @@ The example above shows the added insight of adjusting for Protein level. Origin
 Additionally, there are other situations where the PTM log2FC will be reduced after adjustment.
 
 ``` {r}
-dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
-                       data.protein = raw.protein %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
-                       data.ptm.summarization = quant.msstats.ptm %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
-                       data.protein.summarization = quant.msstats.protein %>% filter(Condition %in% c('Condition_2', 'Condition_5')),
+dataProcessPlotsTMTPTM(data.ptm = raw.ptm %>% filter(
+  Condition %in% c('Condition_2', 'Condition_5')),
+                       data.protein = raw.protein %>% filter(
+                         Condition %in% c('Condition_2', 'Condition_5')),
+                       data.ptm.summarization = quant.msstats.ptm %>% 
+    filter(Condition %in% c('Condition_2', 'Condition_5')),
+                       data.protein.summarization = quant.msstats.protein %>% 
+    filter(Condition %in% c('Condition_2', 'Condition_5')),
                        type = 'ProfilePlot',
                        which.Protein = 'Protein_1076_Y67',
                        originalPlot = FALSE,
                        address = FALSE)
 
-model_df <- rbind(adjusted_model %>% filter(Protein == 'Protein_1076_Y67' & Label == '2-5') %>% select(-Tvalue),
-                  ptm_model %>% filter(Protein == 'Protein_1076_Y67' & Label == '2-5') %>% select(-issue),
-                  protein_model %>% filter(Protein == 'Protein_1076' & Label == '2-5') %>% select(-issue))
+model_df <- rbind(adjusted_model %>% filter(
+  Protein == 'Protein_1076_Y67' & Label == '2-5') %>% select(-Tvalue),
+                  ptm_model %>% filter(
+                    Protein == 'Protein_1076_Y67' & Label == '2-5'
+                    ) %>% select(-issue),
+                  protein_model %>% filter(
+                    Protein == 'Protein_1076' & Label == '2-5'
+                    ) %>% select(-issue))
 
 rownames(model_df) <- c('Adjusted PTM', 'PTM', 'Protein')
 model_df

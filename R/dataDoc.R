@@ -1,24 +1,31 @@
 
 #' Example of input PTM dataset for TMT experiments.
 #'
-#' It can be the output of PDtoMSstatsTMTFormat or other MSstatsTMT converter functions.
+#' It can be the output of PDtoMSstatsTMTFormat or other MSstatsTMT converter
+#'  functions.
 #' It includes peak intensities for a variety of PTMs.
 #' The variables are as follows:
 #'
 #' \itemize{
-#'   \item ProteinName : Name of protein with modification site mapped in with an underscore. ie "Protein_4_Y474"
+#'   \item ProteinName : Name of protein with modification site mapped in with
+#'    an underscore. ie "Protein_4_Y474"
 #'   \item PeptideSequence
 #'   \item Charge
 #'   \item PSM
-#'   \item Mixture : Mixture of samples labeled with different TMT reagents, which can be analyzed in
-#'   a single mass spectrometry experiment. If the channal doesn't have sample, please add `Empty' under Condition.
-#'   \item TechRepMixture : Technical replicate of one mixture. One mixture may have multiple technical replicates.
-#'   For example, if `TechRepMixture' = 1, 2 are the two technical replicates of one mixture, then they should match
+#'   \item Mixture : Mixture of samples labeled with different TMT reagents,
+#'    which can be analyzed in
+#'   a single mass spectrometry experiment. If the channal doesn't have sample,
+#'    please add `Empty' under Condition.
+#'   \item TechRepMixture : Technical replicate of one mixture. One mixture may
+#'    have multiple technical replicates.
+#'   For example, if `TechRepMixture' = 1, 2 are the two technical replicates of
+#'    one mixture, then they should match
 #'   with same `Mixture' value.
 #'   \item Run : MS run ID.
 #'   \item Channel : Labeling information (126, ... 131).
 #'   \item Condition : Condition (ex. Healthy, Cancer, Time0)
-#'   \item BioReplicate : Unique ID for biological subject. If the channal doesn't have sample, please add `Empty' under BioReplicate.
+#'   \item BioReplicate : Unique ID for biological subject. If the channal
+#'   doesn't have sample, please add `Empty' under BioReplicate.
 #'   \item Intensity
 #' }
 #'
@@ -30,9 +37,11 @@
 
 #' Example of input Protein dataset for TMT experiments.
 #'
-#' It can be the output of PDtoMSstatsTMTFormat or other MSstatsTMT converter functions.
+#' It can be the output of PDtoMSstatsTMTFormat or other MSstatsTMT converter
+#' functions.
 #' It includes peak intensities for a variety of PTMs.
-#' This is the companion file to the raw.ptm dataset, includes unmodified protein data.
+#' This is the companion file to the raw.ptm dataset, includes unmodified
+#' protein data.
 #' The variables are as follows:
 #'
 #' \itemize{
@@ -40,15 +49,20 @@
 #'   \item PeptideSequence
 #'   \item Charge
 #'   \item PSM
-#'   \item Mixture : Mixture of samples labeled with different TMT reagents, which can be analyzed in
-#'   a single mass spectrometry experiment. If the channal doesn't have sample, please add `Empty' under Condition.
-#'   \item TechRepMixture : Technical replicate of one mixture. One mixture may have multiple technical replicates.
-#'   For example, if `TechRepMixture' = 1, 2 are the two technical replicates of one mixture, then they should match
+#'   \item Mixture : Mixture of samples labeled with different TMT reagents,
+#'    which can be analyzed in
+#'   a single mass spectrometry experiment. If the channal doesn't have sample,
+#'   please add `Empty' under Condition.
+#'   \item TechRepMixture : Technical replicate of one mixture. One mixture may
+#'   have multiple technical replicates.
+#'   For example, if `TechRepMixture' = 1, 2 are the two technical replicates of
+#'    one mixture, then they should match
 #'   with same `Mixture' value.
 #'   \item Run : MS run ID.
 #'   \item Channel : Labeling information (126, ... 131).
 #'   \item Condition : Condition (ex. Healthy, Cancer, Time0)
-#'   \item BioReplicate : Unique ID for biological subject. If the channal doesn't have sample, please add `Empty' under BioReplicate.
+#'   \item BioReplicate : Unique ID for biological subject. If the channal
+#'   doesn't have sample, please add `Empty' under BioReplicate.
 #'   \item Intensity
 #' }
 #'
@@ -67,12 +81,14 @@
 #'
 #' \itemize{
 #'   \item Run : MS run ID
-#'   \item Protein : Protein ID with modification site mapped in. Ex. Protein_1002_S836
+#'   \item Protein : Protein ID with modification site mapped in. Ex.
+#'   Protein_1002_S836
 #'   \item Abundance: Protein-level summarized abundance
 #'   \item Channel : Labeling information (126, ... 131)
 #'   \item Condition : Condition (ex. Healthy, Cancer, Time0)
 #'   \item BioReplicate : Unique ID for biological subject.
-#'   \item TechRepMixture : Unique ID for technical replicate of one TMT mixture.
+#'   \item TechRepMixture : Unique ID for technical replicate of one TMT
+#'   mixture.
 #'   \item Mixture : Unique ID for TMT mixture.
 #' }
 #'
@@ -96,7 +112,8 @@
 #'   \item Channel : Labeling information (126, ... 131)
 #'   \item Condition : Condition (ex. Healthy, Cancer, Time0)
 #'   \item BioReplicate : Unique ID for biological subject.
-#'   \item TechRepMixture : Unique ID for technical replicate of one TMT mixture.
+#'   \item TechRepMixture : Unique ID for technical replicate of one TMT
+#'   mixture.
 #'   \item Mixture : Unique ID for TMT mixture.
 #' }
 #'
@@ -129,7 +146,8 @@
 #' and PTM adjusted for protein level.
 #'
 #' \itemize{
-#'   \item List objects: PTM.Model, Protein.Model, Adjusted.Model (all \code{dataframe}). Columns as follows:
+#'   \item List objects: PTM.Model, Protein.Model, Adjusted.Model (all
+#'   \code{dataframe}). Columns as follows:
 #'   \item Protein : Protein ID
 #'   \item Label: Label of the pairwise comparision or contrast
 #'   \item log2FC: Log2 fold change
@@ -137,13 +155,20 @@
 #'   \item DF: Degree of freedom
 #'   \item pvalue: Value of p statistic of the test
 #'   \item adj.pvalue: adjusted p value
-#'   \item issue: used for indicating the reason why a comparison is not testable. NA means the comparison is testable.
-#'   'oneConditionMissing' means the protein has no measurements in one conndition of the comparison.
-#'   Furtherone, when 'issue = oneConditionMissing', 'log2FC = Inf' means the negative condition
-#'   (with coefficient -1 in the Label column)  is missing and 'log2FC = -Inf' means
-#'   the positive condition (with coefficient 1 in the Label column)  is missing.
-#'   completeMissing' means the protein has no measurements in all the connditions of the comparison.
-#'   unfittableModel' means there is no enough measurements to fit the linear model.
+#'   \item issue: used for indicating the reason why a comparison is not
+#'   testable. NA means the comparison is testable.
+#'   'oneConditionMissing' means the protein has no measurements in one
+#'   conndition of the comparison.
+#'   Furtherone, when 'issue = oneConditionMissing', 'log2FC = Inf' means the
+#'   negative condition
+#'   (with coefficient -1 in the Label column)  is missing and 'log2FC = -Inf'
+#'   means
+#'   the positive condition (with coefficient 1 in the Label column)  is
+#'   missing.
+#'   completeMissing' means the protein has no measurements in all the
+#'   connditions of the comparison.
+#'   unfittableModel' means there is no enough measurements to fit the linear
+#'   model.
 #'   In other words, each condition has only one measurement.
 #' }
 #'
@@ -161,7 +186,8 @@
 #' and PTM adjusted for protein level.
 #'
 #' \itemize{
-#'   \item List objects: PTM.Model, Protein.Model, Adjusted.Model (all \code{dataframe}). Columns as follows:
+#'   \item List objects: PTM.Model, Protein.Model, Adjusted.Model
+#'   (all \code{dataframe}). Columns as follows:
 #'   \item Protein : Protein ID
 #'   \item Label: Label of the pairwise comparision or contrast
 #'   \item log2FC: Log2 fold change
@@ -169,13 +195,20 @@
 #'   \item DF: Degree of freedom
 #'   \item pvalue: Value of p statistic of the test
 #'   \item adj.pvalue: adjusted p value
-#'   \item issue: used for indicating the reason why a comparison is not testable. NA means the comparison is testable.
-#'   'oneConditionMissing' means the protein has no measurements in one conndition of the comparison.
-#'   Furtherone, when 'issue = oneConditionMissing', 'log2FC = Inf' means the negative condition
-#'   (with coefficient -1 in the Label column)  is missing and 'log2FC = -Inf' means
-#'   the positive condition (with coefficient 1 in the Label column)  is missing.
-#'   completeMissing' means the protein has no measurements in all the connditions of the comparison.
-#'   unfittableModel' means there is no enough measurements to fit the linear model.
+#'   \item issue: used for indicating the reason why a comparison is not
+#'   testable. NA means the comparison is testable.
+#'   'oneConditionMissing' means the protein has no measurements in
+#'   one conndition of the comparison.
+#'   Furtherone, when 'issue = oneConditionMissing', 'log2FC = Inf'
+#'   means the negative condition
+#'   (with coefficient -1 in the Label column)  is missing and
+#'   'log2FC = -Inf' means
+#'   the positive condition (with coefficient 1 in the Label column)
+#'    is missing.
+#'   completeMissing' means the protein has no measurements in all the
+#'   connditions of the comparison.
+#'   unfittableModel' means there is no enough measurements to fit the
+#'   linear model.
 #'   In other words, each condition has only one measurement.
 #' }
 #'

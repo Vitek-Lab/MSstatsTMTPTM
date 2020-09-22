@@ -12,15 +12,22 @@
 #' @importFrom utils read.table write.table
 #' @importFrom MSstatsTMT groupComparisonTMT
 #' @importFrom stringr str_match
-#' @param data.ptm Name of the output of the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function with PTM data. It should have columns named
-#'                   `Protein`, `TechRepMixture`,  `Mixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
-#' @param data.protein Protein dataset returned by the MSstatsTMT \code{\link[MSstatsTMT]{proteinSummarization}} function
+#' @param data.ptm Name of the output of the MSstatsTMT
+#' \code{\link[MSstatsTMT]{proteinSummarization}} function with PTM data.
+#' It should have columns named `Protein`, `TechRepMixture`,  `Mixture`,
+#' `Run`, `Channel`, `Condition`, `BioReplicate`, `Abundance`.
+#' @param data.protein Protein dataset returned by the MSstatsTMT
+#' \code{\link[MSstatsTMT]{proteinSummarization}} function
 #' @param contrast.matrix Comparison between conditions of interests.
-#'                        1) default is 'pairwise', which compare all possible pairs between two conditions.
-#'                        2) Otherwise, users can specify the comparisons of interest. Based on the levels of conditions,
-#'                        specify 1 or -1 to the conditions of interests and 0 otherwise.
+#'                        1) default is 'pairwise', which compare all
+#'                        possible pairs between two conditions.
+#'                        2) Otherwise, users can specify the comparisons
+#'                        of interest. Based on the levels of conditions,
+#'                        specify 1 or -1 to the conditions of interests
+#'                        and 0 otherwise.
 #'                        The levels of conditions are sorted alphabetically.
-#' @param moderated TRUE will moderate t statistic; FALSE (default) uses ordinary t statistic.
+#' @param moderated TRUE will moderate t statistic; FALSE (default) uses
+#' ordinary t statistic.
 #' @param adj.method Adjusted method for multiple comparison. "BH" is default.
 #'
 #' @return A list \code{models} of all modeled and adjusted datasets
@@ -37,7 +44,8 @@
 #'                                       data.protein=quant.msstats.protein,
 #'                                       contrast.matrix = example.comparisons)
 #'
-groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix = "pairwise",
+groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
+                                  contrast.matrix = "pairwise",
                                   moderated = FALSE, adj.method = "BH") {
 
   ## save process output in each step
@@ -65,7 +73,10 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
   }
 
   processout <- rbind(processout,
-                      as.matrix(c(" ", " ", "MSstatsTMTPTM - groupComparisonTMTPTM function", " "), ncol=1))
+                      as.matrix(c(
+                        " ", " ",
+                        "MSstatsTMTPTM - groupComparisonTMTPTM function", " "),
+                        ncol=1))
 
   Protein = Label = Site = NULL
 
@@ -92,14 +103,17 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
   }
 
   ## MSstatsTMT Modeling
-  ptm_model <- MSstatsTMT::groupComparisonTMT(data.ptm, contrast.matrix, moderated, adj.method)
+  ptm_model <- MSstatsTMT::groupComparisonTMT(data.ptm, contrast.matrix,
+                                              moderated, adj.method)
 
   models <- list('PTM.Model' = ptm_model)
 
   if (adj.protein) {
 
     ## MSstatsTMT Modeling
-    protein_model <- MSstatsTMT::groupComparisonTMT(data.protein, contrast.matrix, moderated, adj.method)
+    protein_model <- MSstatsTMT::groupComparisonTMT(data.protein,
+                                                    contrast.matrix,
+                                                    moderated, adj.method)
 
     ## Parse site from protein name
     regex_protein <- '([^-]+)(?:_[^-]+){1}$'
@@ -110,15 +124,19 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL, contrast.matrix
     ## adjustProteinLevel function can only compare one label at a time
     comparisons <- (ptm_model_site_sep %>% distinct(Label))[[1]]
     adjusted_models <- data.frame()
-    for (i in 1:length(comparisons)) {
-      temp_adjusted_model <- apply_ptm_adjustment(comparisons[[i]], ptm_model_site_sep, protein_model)
+    for (i in seq_len(length(comparisons))) {
+      temp_adjusted_model <- apply_ptm_adjustment(comparisons[[i]],
+                                                  ptm_model_site_sep,
+                                                  protein_model)
       adjusted_models <- rbind(adjusted_models, temp_adjusted_model)
     }
 
-    adjusted_models$Protein <- paste(adjusted_models$Protein, adjusted_models$Site, sep = '_')
+    adjusted_models$Protein <- paste(adjusted_models$Protein,
+                                     adjusted_models$Site, sep = '_')
     adjusted_models <- adjusted_models %>% select(-Site)
 
-    models <- list('PTM.Model' = ptm_model, 'Protein.Model' = protein_model, 'Adjusted.Model' = adjusted_models)
+    models <- list('PTM.Model' = ptm_model, 'Protein.Model' = protein_model,
+                   'Adjusted.Model' = adjusted_models)
 
   }
 
@@ -135,7 +153,8 @@ apply_ptm_adjustment <- function(label, ptm_model, protein_model){
 
   ## Function from MSstatsPTM Compare
   temp_adjusted_model <- adjustProteinLevel(temp_ptm_model, temp_protein_model)
-  temp_adjusted_model$adj.pvalue <- p.adjust(temp_adjusted_model$pvalue, method = 'BH')
+  temp_adjusted_model$adj.pvalue <- p.adjust(temp_adjusted_model$pvalue,
+                                             method = 'BH')
   temp_adjusted_model
 }
 

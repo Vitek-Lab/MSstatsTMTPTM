@@ -19,12 +19,14 @@ The variables are as follows:
 \details{
 \itemize{
 \item Run : MS run ID
-\item Protein : Protein ID with modification site mapped in. Ex. Protein_1002_S836
+\item Protein : Protein ID with modification site mapped in. Ex.
+Protein_1002_S836
 \item Abundance: Protein-level summarized abundance
 \item Channel : Labeling information (126, ... 131)
 \item Condition : Condition (ex. Healthy, Cancer, Time0)
 \item BioReplicate : Unique ID for biological subject.
-\item TechRepMixture : Unique ID for technical replicate of one TMT mixture.
+\item TechRepMixture : Unique ID for technical replicate of one TMT
+mixture.
 \item Mixture : Unique ID for TMT mixture.
 }
 }
