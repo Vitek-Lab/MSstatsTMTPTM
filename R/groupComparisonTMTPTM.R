@@ -158,7 +158,6 @@ apply_ptm_adjustment <- function(label, ptm_model, protein_model){
   temp_adjusted_model
 }
 
-## TODO: Replace this with MSstatsPTM function once made external
 #' @keywords internal
 adjustProteinLevel <- function(diffSite, diffProtein) {
   diffRef <- diffProtein[, c("Protein", "Label", "log2FC", "SE", "DF")]
