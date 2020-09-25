@@ -31,7 +31,7 @@ This Vignette provides an example workflow for how to use the package MSstatsTMT
 
 ### 1.1 Raw Data Format
 
-The first step is to load in the raw dataset for both the PTM and Protein datasets. This can be the output of the MSstatsTMT converter functions: `SpectroMinetoMSstatsTMTFormat`, and `OpenMStoMSstatsTMTFormat`. Both datasets must include the following columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`.
+The first step is to load in the raw dataset for both the PTM and Protein datasets. This can be the output of the MSstatsTMT converter functions: `PDtoMSstatsTMTFormat`, `SpectroMinetoMSstatsTMTFormat`, and `OpenMStoMSstatsTMTFormat`. Both the PTM and protein datasets must include the following columns: `ProteinName`, `PeptideSequence`, `Charge`, `PSM`, `Mixture`, `TechRepMixture`, `Run`, `Channel`, `Condition`, `BioReplicate`, and `Intensity`.
 
 #### 1.1.1 Raw PTM Data
 
@@ -42,6 +42,7 @@ head(raw.ptm)
 ```
 
 It is important to note the `ProteinName` column in the PTM dataset represents the modification sites. The location of the modification must be added into the `ProteinName`. For example the first row shows `Protein_4_Y474` for ProteinName, with Y474 being the modificaiton site. This can be done as shown above, or by adding the PeptideSequence into the ProteinName, ex. `Protein_4_Peptide_455` for the first row.
+**!! todo : Protein_4_Peptide_455 for the first row is not matched to what I can see in html. I have the first row with Protein12_S703 for protein and Peptide_491 for peptidesequence. **
 
 #### 1.1.1 Raw Protein Data
 
@@ -54,7 +55,7 @@ The raw Protein dataset looks similar to the PTM dataset, however the `ProteinNa
 
 ### 1.2 proteinSummarization
 
-After loading in the input data, the next step is to use the proteinSummarization function from MSstatsTMT. This provides the summarized dataset needed to model the protein/PTM abundance. The function will summarize the Protein dataset up to the protein level and will summarize the PTM dataset up to the PTM level. The different summarizations are caused by adding the PTM site into the `ProteinName` field.
+After loading in the input data, the next step is to use the proteinSummarization function from MSstatsTMT. This provides the summarized dataset needed to model the protein/PTM abundance. The function will summarize the Protein dataset up to the protein level and will summarize the PTM dataset up to the PTM level. The different summarizations are caused by adding the PTM site into the `ProteinName` field. **!! todo : add the sentences-The summarization for ptm and protein datasets should be done separately. The details about normalization and imputation option in proteinSummarization is available in xxx (point to MSstatsTMT package).**
 
 ``` {r, results='hide', message=FALSE, warning=FALSE}
 
@@ -81,18 +82,23 @@ head(quant.msstats.protein)
 
 ### 1.3 groupComparisonTMTPTM
 
-After the two datasets are summarized, they can be used in the modeling function `groupComparisonTMTPTM`.
+After the two datasets are summarized, they**!!todo: replace they can ->  both the summarized PTM and protein abundance should ?** be used in the modeling function `groupComparisonTMTPTM`.
 
 ``` {r, results='hide', message=FALSE, warning=FALSE}
 
 # test for all the possible pairs of conditions
 test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                        data.protein=quant.msstats.protein)
+```
 
+**!!todo : You can define the contrast matrix. Here is the example of contrast.matrix (It will be good to show how example.comparisons looks like)**
+``` {r,  message=FALSE, warning=FALSE}
 # Load specific contrast matrix
 # example.comparisons <- read.csv(file="example.comparisons.csv", header=TRUE)
 example.comparisons
+```
 
+``` {r, results='hide', message=FALSE, warning=FALSE}
 # test for specified condition comparisons only
 test.example.comparisons <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                        data.protein=quant.msstats.protein,
@@ -110,11 +116,11 @@ head(adjusted_model)
 
 ```
 
-The modeling function will return a list consisting of three dataframes. One each for the PTM, Protein, and Adjusted PTM models.
+The modeling function will return a list consisting of three dataframes. One each for the PTM, Protein, and Adjusted PTM models. **!!todo : change this sentence like : One each for the PTM-level, Protein-level, and adjusted PTM-level group comparisno result? **
 
 ### 1.4 Example Volcano Plot
 
-The models from the `groupComparisonTMTPTM` function can be used in the model visualization function, `groupComparisonPlots`, from the base MSstats. Below is a Volcano Plot for the Adjusted PTM model.
+The models from the `groupComparisonTMTPTM` function can be used in the model visualization function, `groupComparisonPlots`, from the base MSstats. Below is a Volcano Plot for the Adjusted PTM model.**!!todo : Note: the input for groupComparisonPlots should be one data.frame from output of groupComparisonTMTPTM.**
 
 ``` {r}
 groupComparisonPlots(data = adjusted_model,
@@ -183,7 +189,7 @@ model_df <- rbind(adjusted_model %>% filter(
 rownames(model_df) <- c('Adjusted PTM', 'PTM', 'Protein')
 model_df
 ```
-
+**!!todo: in the html, row names are not shown. so confuse what the first two rows for.**
 The example above shows the added insight of adjusting for Protein level. Originally the PTM model shows a small positive log2FC of 0.144. However, the global protein abundance changed strongly in the negative direction, -0.508. When the PTM is adjusted for the global the log2FC is increased to 0.652, which is a much larger absolute change than without adjustment. The change in abundance of this PTM may have been marked as insignificant without adjusting for protein levels. Note the change in SE and DF once the PTM model is adjusted.
 
 Additionally, there are other situations where the PTM log2FC will be reduced after adjustment.
@@ -217,7 +223,7 @@ model_df
 
 **Note - In this example Protein_1076 was only available in one run of the global protein experiment.**
 
-In this example the PTM model originally showed a large log2FC of 0.242, however most of this FC was due to the global protein abundance change which was 0.356. Once adjusted, the PTM shows a much smaller FC of -0.114. Without adjustment a potentially incorrect inference could have been drawn for this PTM.
+In this example the PTM model originally showed a large log2FC of 0.242, however most of this **!!todo :log2 FC? **FC was due to the global protein abundance change which was 0.356. Once adjusted, the PTM shows a much smaller FC of -0.114. Without adjustment a potentially incorrect inference could have been drawn for this PTM.
 
 From these two examples the added insight into PTM abundance change from protein adjustment can be observed. If the goal of the experiment is to find the true abundance change due to PTMs than removing the effect of the protein is very important.
 
