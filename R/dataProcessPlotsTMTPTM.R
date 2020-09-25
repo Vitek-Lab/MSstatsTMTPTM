@@ -150,6 +150,33 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
                 ". However,'type' should be one of ProfilePlot, QCPlot."))
   }
 
+  raw.required.columns <- c('ProteinName', 'PeptideSequence', 'Charge', 'PSM',
+                        'Mixture', 'TechRepMixture', 'Run', 'Channel',
+                        'Condition', 'BioReplicate', 'Intensity')
+  if (!all(raw.required.columns %in% names(data.ptm))) {
+    stop("Please include in the raw PTM data all the following elements: ",
+         paste0(sQuote(raw.required.columns), collapse = ", "))
+  }
+  if (!all(raw.required.columns %in% names(data.protein))) {
+    stop("Please include in the raw Protein data all the following elements: ",
+         paste0(sQuote(raw.required.columns), collapse = ", "))
+  }
+
+  summarized.required.columns <- c('Run', 'Protein', 'Abundance', 'Channel',
+                        'BioReplicate', 'Condition', 'TechRepMixture',
+                        'Mixture')
+  if (!all(summarized.required.columns %in% names(data.ptm.summarization))) {
+    stop(
+      "Please include in the summarized PTM data all the following elements: ",
+         paste0(sQuote(summarized.required.columns), collapse = ", "))
+  }
+  if (!all(summarized.required.columns %in% names(data.protein.summarization))
+      ) {
+    stop(
+      "Please include in the summarized
+      Protein data all the following elements: ",
+         paste0(sQuote(summarized.required.columns), collapse = ", "))
+  }
 
   Condition = Run = xorder = Channel = NULL
   PeptideSequence = PSM = ProteinName = NULL

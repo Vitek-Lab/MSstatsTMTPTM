@@ -215,6 +215,8 @@ rownames(model_df) <- c('Adjusted PTM', 'PTM', 'Protein')
 model_df
 ```
 
+**Note - In this example Protein_1076 was only available in one run of the global protein experiment.**
+
 In this example the PTM model originally showed a large log2FC of 0.242, however most of this FC was due to the global protein abundance change which was 0.356. Once adjusted, the PTM shows a much smaller FC of -0.114. Without adjustment a potentially incorrect inference could have been drawn for this PTM.
 
 From these two examples the added insight into PTM abundance change from protein adjustment can be observed. If the goal of the experiment is to find the true abundance change due to PTMs than removing the effect of the protein is very important.
