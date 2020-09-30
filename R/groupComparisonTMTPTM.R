@@ -159,6 +159,8 @@ apply_ptm_adjustment <- function(label, ptm_model, protein_model){
 }
 
 #' @keywords internal
+#' this function is from Tsung-Heng's
+#' pacakge MSstatsPTM and will be replaced later
 adjustProteinLevel <- function(diffSite, diffProtein) {
   diffRef <- diffProtein[, c("Protein", "Label", "log2FC", "SE", "DF")]
   names(diffRef)[names(diffRef) == "log2FC"] <- "log2FC_ref"
