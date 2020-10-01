@@ -108,17 +108,17 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
   ## save process output in each step
   allfiles <- list.files()
-  filenaming <- "msstatstmtptm"
+  filenaming <- "mstatstmtptm"
 
   if (length(grep(filenaming,allfiles)) == 0) {
 
-    finalfile <- "msstatstmtptm.log"
+    finalfile <- "mstatstmtptm.log"
     processout <- NULL
 
   } else {
 
     num <- 0
-    finalfile <- "msstatstmtptm.log"
+    finalfile <- "mstatstmtptm.log"
 
     while (is.element(finalfile, allfiles)) {
       num <- num + 1
