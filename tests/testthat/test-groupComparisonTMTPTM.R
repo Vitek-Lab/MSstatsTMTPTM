@@ -4,7 +4,7 @@ test_that("groupComparisonTMTPTM works", {
   output<-groupComparisonTMTPTM(data.ptm = MSstatsTMTPTM::quant.msstats.ptm,
                                 data.protein =
                                   MSstatsTMTPTM::quant.msstats.protein)
-  expect_equal(test.pairwise, MSstatsTMTPTM::test.pairwise, tolerance=1e-5)
+  expect_equal(output, MSstatsTMTPTM::test.pairwise, tolerance=1e-5)
 
 })
 
