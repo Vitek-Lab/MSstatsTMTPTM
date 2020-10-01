@@ -1,7 +1,7 @@
 # MSstatsTMTPTM
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.com/Vitek-Lab/MSstatsTMTPTM.svg?branch=master)](https://travis-ci.com/Vitek-Lab/MSstatsTMTPTM)
+[![Travis build status](https://travis-ci.org/Vitek-Lab/MSstatsTMTPTM.svg?branch=master)](https://travis-ci.org/Vitek-Lab/MSstatsTMTPTM)
 [![Codecov test coverage](https://codecov.io/gh/Vitek-Lab/MSstatsTMTPTM/branch/master/graph/badge.svg)](https://codecov.io/gh/Vitek-Lab/MSstatsTMTPTM?branch=master)
 <!-- badges: end -->
 
