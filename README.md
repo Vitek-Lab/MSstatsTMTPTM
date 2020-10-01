@@ -13,7 +13,7 @@ devtools::install_github("Vitek-Lab/MSstatsTMTPTM", build_vignettes = TRUE)
 ## Contributing
 
 We welcome contributions from the community. For details on how to contribute to the
-development of MSsstas, please refer to the [CONTRIBUTING](https://github.com/Vitek-Lab/MSstatsTMTPTM/.github/CONTRIBUTING.md) file.
+development of MSsstas, please refer to the [CONTRIBUTING](https://github.com/Vitek-Lab/MSstatsTMTPTM/blob/master/.github/CONTRIBUTING.md) file.
 
 ## License
 
