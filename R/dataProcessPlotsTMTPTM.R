@@ -77,6 +77,7 @@
 #'                    data.protein=raw.protein,
 #'                    data.ptm.summarization=quant.msstats.ptm,
 #'                    data.protein.summarization=quant.msstats.protein,
+#'                    which.Protein = 1,
 #'                    type='ProfilePlot')
 #'
 #' ## NottoRun: QC plot
