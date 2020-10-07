@@ -1,9 +1,16 @@
 Type: Package
 Package: MSstatsTMTPTM
-Title: Post Translational Modification (PTM) Significance Analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling
-Version: 0.99.1
+Title: Post Translational Modification (PTM) Significance Analysis in shotgun 
+        mass spectrometry-based proteomic experiments with tandem mass tag 
+        (TMT) labeling
+Version: 0.99.2
 Date: 2020-09-28
-Description: Tools for Post Translational Modification (PTM) and protein significance analysis in shotgun mass spectrometry-based proteomic experiments with tandem mass tag (TMT) labeling.
+Description: Tools for Post Translational Modification (PTM) and protein 
+              significance analysis in shotgun mass spectrometry-based proteomic
+              experiments with tandem mass tag (TMT) labeling. The functions in
+              this package should be used after PTM/protein summarization. They
+              can be used to both plot the summarized results and model the 
+              summarized datasets.
 Authors@R: c(person("Devon", "Kohler", email = "kohler.d@northeastern.edu", role = c("aut", "cre")),
             person("Ting", "Huang", email = "thuang0703@gmail.com", role=c("aut")),
             person("Mateusz", "Staniak", email = "mtst@mstaniak.pl", role = c("aut")),
@@ -20,10 +27,12 @@ Suggests:
     rmarkdown,
     testthat,
     MSstats,
-    covr
+    covr,
+    BiocManager
 VignetteBuilder: knitr
 biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software, DifferentialExpression, 
            OneChannel, TwoChannel, Normalization, QualityControl
+BugReports: https://github.com/Vitek-Lab/MSstatsTMTPTM/issues
 Encoding: UTF-8
 LazyData: TRUE
 Roxygen: list(markdown = TRUE)

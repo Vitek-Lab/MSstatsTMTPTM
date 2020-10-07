@@ -51,10 +51,10 @@ data(quant.msstats.ptm)
 data(quant.msstats.protein)
 
 # Load specific contrast matrix
-data(example.comparisons)
+data(example.contrast.matrix)
 
-test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+model.results.contrast <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
                                       data.protein=quant.msstats.protein,
-                                      contrast.matrix = example.comparisons)
+                                      contrast.matrix = example.contrast.matrix)
 
 }

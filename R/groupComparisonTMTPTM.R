@@ -37,12 +37,12 @@
 #' data(quant.msstats.protein)
 #'
 #' # Load specific contrast matrix
-#' data(example.comparisons)
+#' data(example.contrast.matrix)
 #'
 #" # test for specified condition comparisons only
-#' test.pairwise <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
+#' model.results.contrast <- groupComparisonTMTPTM(data.ptm=quant.msstats.ptm,
 #'                                       data.protein=quant.msstats.protein,
-#'                                       contrast.matrix = example.comparisons)
+#'                                       contrast.matrix = example.contrast.matrix)
 #'
 groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
                                   contrast.matrix = "pairwise",
@@ -78,9 +78,9 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
                         "MSstatsTMTPTM - groupComparisonTMTPTM function", " "),
                         ncol=1))
 
-  Protein = Label = Site = NULL
+  Protein <- Label <- Site <- NULL
 
-  adj.protein = FALSE
+  adj.protein <- FALSE
 
   ## Check for missing variables in PTM
   if (is.null(data.ptm))
@@ -146,7 +146,7 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
 #' @keywords internal
 apply_ptm_adjustment <- function(label, ptm_model, protein_model){
 
-  Label = NULL
+  Label <- NULL
 
   temp_ptm_model <- ptm_model %>% filter(Label == label)
   temp_protein_model <- protein_model %>% filter(Label == label)

@@ -78,14 +78,8 @@
 #'                    data.ptm.summarization=quant.msstats.ptm,
 #'                    data.protein.summarization=quant.msstats.protein,
 #'                    which.Protein = 1,
-#'                    type='ProfilePlot')
-#'
-#' ## NottoRun: QC plot
-#' # dataProcessPlotsTMTPTM(data.ptm=raw.ptm,
-#'                     # data.protein=raw.protein,
-#'                     # data.ptm.summarization=quant.msstats.ptm,
-#'                     # data.protein.summarization=quant.msstats.protein,
-#'                     # type='QCPlot')
+#'                    type='ProfilePlot',
+#'                    address=FALSE)
 dataProcessPlotsTMTPTM <- function(data.ptm,
                                    data.protein,
                                    data.ptm.summarization,
@@ -147,8 +141,8 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
                                  QCPlot.")))
     write.table(processout, file=finalfile, row.names=FALSE)
 
-    stop(paste0("Input for type=", type,
-                ". However,'type' should be one of ProfilePlot, QCPlot."))
+    stop("Input for type=", type,
+                ". However,'type' should be one of ProfilePlot, QCPlot.")
   }
 
   raw.required.columns <- c('ProteinName', 'PeptideSequence', 'Charge', 'PSM',
@@ -179,10 +173,10 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
          paste0(sQuote(summarized.required.columns), collapse = ", "))
   }
 
-  Condition = Run = xorder = Channel = NULL
-  PeptideSequence = PSM = ProteinName = NULL
-  GlobalProtein = Protein = NULL
-  groupAxis = cumGroupAxis = abundance = analysis = NULL
+  Condition <- Run <- xorder <- Channel <- NULL
+  PeptideSequence <- PSM <- ProteinName <- NULL
+  GlobalProtein <- Protein <- NULL
+  groupAxis <- cumGroupAxis <- abundance <- analysis <- NULL
 
   datafeature.protein <- data.protein
   datafeature.ptm <- data.ptm
@@ -240,9 +234,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
   if (length(setdiff(toupper(type), c(toupper("ProfilePlot"), toupper("QCPlot")
                                       ))) != 0) {
-    stop(paste0("Input for type=", type,
+    stop("Input for type=", type,
                 ". However,'type' should be one of \"ProfilePlot\", \"QCPlot\"."
-                ))
+                )
   }
 
   if (address == FALSE){
@@ -272,9 +266,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
         ## message if name of Protein is wrong.
         if (length(setdiff(temp.name,unique(datafeature.ptm$Protein))) > 0) {
-          stop(paste0("Please check protein name. Data set does not
+          stop("Please check protein name. Data set does not
                       have this protein. - ",
-                      toString(temp.name)))
+                      toString(temp.name))
         }
       }
 
@@ -284,9 +278,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
         ## message if name of Protein is wrong.
         if (length(levels(datafeature.ptm$Protein)) < max(which.Protein)) {
-          stop(paste0("Please check your ion of proteins. There are ",
+          stop("Please check your ion of proteins. There are ",
                       length(levels(datafeature.ptm$Protein))," proteins in this
-                      dataset."))
+                      dataset.")
         }
       }
 
@@ -509,36 +503,17 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         sub.ptm$PSM <- factor(as.character(sub.ptm$PSM))
 
         # if all measurements are NA,
-        if (nrow(sub.protein) == sum(is.na(sub.protein$abundance))) {
+        if (nrow(sub.protein) == sum(is.na(sub.protein$abundance))|
+            nrow(sub.protein) == sum(!is.na(
+          sub.protein$abundance) & sub.protein$abundance == 0)|
+          nrow(sub.ptm) == sum(is.na(sub.ptm$abundance))|
+          nrow(sub.ptm) == sum(
+            !is.na(sub.ptm$abundance) & sub.ptm$abundance == 0)) {
           message(paste0("Can't the Profile plot for ", unique(
             sub.protein$Protein), "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are NAs."))
+                         ") because all measurements are NAs or zero."))
           next()
         }
-
-        if (nrow(sub.protein) == sum(!is.na(
-          sub.protein$abundance) & sub.protein$abundance == 0)) {
-          message(paste0("Can't the Profile plot for ", unique(
-            sub.protein$Protein), "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are zeros."))
-          next()
-        }
-        # if all measurements are NA,
-        if (nrow(sub.ptm) == sum(is.na(sub.ptm$abundance))) {
-          message(paste0("Can't the Profile plot for ", unique(sub.ptm$Protein),
-                         "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are NAs."))
-          next()
-        }
-
-        if (nrow(sub.ptm) == sum(
-          !is.na(sub.ptm$abundance) & sub.ptm$abundance == 0)) {
-          message(paste0("Can't the Profile plot for ", unique(sub.ptm$Protein),
-                         "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are zeros."))
-          next()
-        }
-
 
         ## seq for peptide and charge
         ## for seting up color and linetype
@@ -768,34 +743,16 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         sub.ptm$PSM <- factor(as.character(sub.ptm$PSM))
 
         # if all measurements are NA,
-        if (nrow(sub.protein) == sum(is.na(sub.protein$abundance))) {
+        if (nrow(sub.protein) == sum(is.na(sub.protein$abundance))|
+            nrow(sub.protein) == sum(
+              !is.na(sub.protein$abundance) & sub.protein$abundance == 0)|
+            nrow(sub.ptm) == sum(is.na(sub.ptm$abundance))|
+            nrow(sub.ptm) == sum(
+              !is.na(sub.ptm$abundance) & sub.ptm$abundance == 0)) {
           message(paste0("Can't the Profile plot for ", unique(
             sub.protein$Protein),
                          "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are NAs."))
-          next()
-        }
-
-        if (nrow(sub.protein) == sum(
-          !is.na(sub.protein$abundance) & sub.protein$abundance == 0)) {
-          message(paste0("Can't the Profile plot for ", unique(
-            sub.protein$Protein), "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are zeros."))
-          next()
-        }
-        # if all measurements are NA,
-        if (nrow(sub.ptm) == sum(is.na(sub.ptm$abundance))) {
-          message(paste0("Can't the Profile plot for ", unique(sub.ptm$Protein),
-                         "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are NAs."))
-          next()
-        }
-
-        if (nrow(sub.ptm) == sum(
-          !is.na(sub.ptm$abundance) & sub.ptm$abundance == 0)) {
-          message(paste0("Can't the Profile plot for ", unique(sub.ptm$Protein),
-                         "(", i, " of ", length(plot_proteins),
-                         ") because all measurements are zeros."))
+                         ") because all measurements are NAs or zero."))
           next()
         }
 
@@ -1271,9 +1228,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
           ## message if name of Protein is wrong.
           if (length(setdiff(temp.name,unique(datafeature.ptm$Protein))) > 0) {
-            stop(paste0("Please check protein name.
+            stop("Please check protein name.
                         Data set does not have this protein. - ",
-                        toString(temp.name)))
+                        toString(temp.name))
           }
         }
 
@@ -1283,9 +1240,9 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
 
           ## message if name of Protein is wrong.
           if (length(levels(datafeature.ptm$Protein)) < max(which.Protein)) {
-            stop(paste0("Please check your ion of proteins. There are ",
+            stop("Please check your ion of proteins. There are ",
                         length(levels(datafeature.ptm$Protein)),
-                        " proteins in this dataset."))
+                        " proteins in this dataset.")
           }
         }
 
@@ -1330,17 +1287,10 @@ dataProcessPlotsTMTPTM <- function(data.ptm,
         sub.protein <- sub.protein[!is.na(sub.protein$abundance), ]
 
         ## if all protein measurements are NA,
-        if (nrow(sub.ptm) == sub.ptm[!is.na(sub.ptm$abundance), ]) {
+        if (nrow(sub.ptm) == sub.ptm[!is.na(sub.ptm$abundance), ] |
+            nrow(sub.protein) == sub.protein[!is.na(sub.protein$abundance), ]) {
           message(paste("Can't the Quality Control plot for ", unique(
             sub.ptm$Protein),
-                        "(", i, " of ", length(plot_proteins),
-                        ") because all measurements are NAs."))
-          next()
-        }
-        ## if all ptm measurements are NA,
-        if (nrow(sub.protein) == sub.protein[!is.na(sub.protein$abundance), ]) {
-          message(paste("Can't the Quality Control plot for ", unique(
-            sub.protein$Protein),
                         "(", i, " of ", length(plot_proteins),
                         ") because all measurements are NAs."))
           next()

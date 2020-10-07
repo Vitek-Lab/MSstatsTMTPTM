@@ -135,9 +135,9 @@
 #'
 #' @format A data frame with 9 rows and 6 variables.
 #' @examples
-#' head(example.comparisons)
+#' head(example.contrast.matrix)
 #'
-"example.comparisons"
+"example.contrast.matrix"
 
 #' Ouput of groupComparisonTMTPTM for full pairwise test
 #'
@@ -174,10 +174,10 @@
 #'
 #' @format A list of three dataframes
 #' @examples
-#' names(test.pairwise)
-#' head(test.pairwise[[1]])
+#' names(model.results.pairwise)
+#' head(model.results.pairwise[[1]])
 #'
-"test.pairwise"
+"model.results.pairwise"
 
 #' Ouput of groupComparisonTMTPTM for specific comparisons of interest
 #'
@@ -214,7 +214,7 @@
 #'
 #' @format A list of three dataframes
 #' @examples
-#' names(test.example.comparisons)
-#' head(test.example.comparisons[[1]])
+#' names(model.results.contrast)
+#' head(model.results.contrast[[1]])
 #'
-"test.example.comparisons"
+"model.results.contrast"

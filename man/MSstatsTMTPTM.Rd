@@ -9,7 +9,9 @@ experiments with tandem mass tag (TMT) labeling.}
 \description{
 A set of tools for detecting differentially abundant PTMs and proteins in
 shotgun mass spectrometry-based proteomic experiments with tandem mass tag
-(TMT) labeling.
+(TMT) labeling. The functions in this package should be used after
+PTM/protein summarization. They can be used to both plot the summarized
+results and model the summarized datasets.
 }
 \section{functions }{
 
