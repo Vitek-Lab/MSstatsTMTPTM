@@ -27,8 +27,7 @@ Suggests:
     rmarkdown,
     testthat,
     MSstats,
-    covr,
-    BiocManager
+    covr
 VignetteBuilder: knitr
 biocViews: ImmunoOncology, MassSpectrometry, Proteomics, Software, DifferentialExpression, 
            OneChannel, TwoChannel, Normalization, QualityControl
