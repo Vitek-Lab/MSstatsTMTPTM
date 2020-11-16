@@ -44,7 +44,7 @@ statistical testing:
 
 To install this package, start R (version "4.0") and enter:
 
-``` {r}
+``` {r, eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
