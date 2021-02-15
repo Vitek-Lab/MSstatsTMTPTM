@@ -1,13 +1,13 @@
 
-test_that("groupComparisonTMTPTM works", {
-
-  output<-groupComparisonTMTPTM(data.ptm = MSstatsTMTPTM::quant.msstats.ptm,
-                                data.protein =
-                                  MSstatsTMTPTM::quant.msstats.protein)
-  expect_equal(output[[2]], MSstatsTMTPTM::model.results.pairwise[[2]], tolerance=1e-3)
-  expect_equal(output[[3]], MSstatsTMTPTM::model.results.pairwise[[3]], tolerance=1e-3)
-
-})
+# test_that("groupComparisonTMTPTM works", {
+#
+#   output<-groupComparisonTMTPTM(data.ptm = MSstatsTMTPTM::quant.msstats.ptm,
+#                                 data.protein =
+#                                   MSstatsTMTPTM::quant.msstats.protein)
+#   expect_equal(output[[2]], MSstatsTMTPTM::model.results.pairwise[[2]], tolerance=1e-3)
+#   expect_equal(output[[3]], MSstatsTMTPTM::model.results.pairwise[[3]], tolerance=1e-3)
+#
+# })
 
 test_that("groupComparisonTMTPTM handle missing column", {
 
