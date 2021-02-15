@@ -103,6 +103,7 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
   }
 
   ## MSstatsTMT Modeling
+  message("Starting PTM modeling...")
   ptm_model <- MSstatsTMT::groupComparisonTMT(data.ptm, contrast.matrix,
                                               moderated, adj.method)
 
@@ -111,15 +112,31 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
   if (adj.protein) {
 
     ## MSstatsTMT Modeling
+    message("Starting Protein modeling...")
     protein_model <- MSstatsTMT::groupComparisonTMT(data.protein,
                                                     contrast.matrix,
                                                     moderated, adj.method)
 
     ## Parse site from protein name
-    regex_protein <- '([^-]+)(?:_[^-]+){1}$'
-    regex_site <- '_(?!.*_)([^-]+)'
-    ptm_model_site_sep <- ptm_model %>% mutate(Site = str_match(
-      Protein, regex_site)[,2], Protein = str_match(Protein, regex_protein)[,2])
+    # regex_protein <- '([^-]+)(?:_[^-]+){1}$'
+    # regex_site <- '_(?!.*_)([^-]+)'
+    # ptm_model_site_sep <- ptm_model %>% mutate(Site = str_match(
+    #   Protein, regex_site)[,2], Protein = str_match(Protein, regex_protein)[,2])
+    message("Starting adjustment...")
+    ptm_model_site_sep <- ptm_model
+
+    ## All proteins
+    available_proteins <- unique(as.character(protein_model$Protein))
+    available_proteins <- available_proteins[order(nchar(available_proteins),
+                                                   available_proteins,
+                                                   decreasing = TRUE)]
+
+    ## Set site
+    ptm_model_site_sep$Site <- ptm_model_site_sep$Protein
+    ## Call Rcpp function
+    ptm_proteins <- extract_protein_name(ptm_model_site_sep$Protein,
+                                         available_proteins)
+    ptm_model_site_sep$Protein <- ptm_proteins
 
     ## adjustProteinLevel function can only compare one label at a time
     comparisons <- (ptm_model_site_sep %>% distinct(Label))[[1]]
@@ -131,8 +148,7 @@ groupComparisonTMTPTM <- function(data.ptm, data.protein = NULL,
       adjusted_models <- rbind(adjusted_models, temp_adjusted_model)
     }
 
-    adjusted_models$Protein <- paste(adjusted_models$Protein,
-                                     adjusted_models$Site, sep = '_')
+    adjusted_models$Protein <- adjusted_models$Site
     adjusted_models <- adjusted_models %>% select(-Site)
 
     models <- list('PTM.Model' = ptm_model, 'Protein.Model' = protein_model,
