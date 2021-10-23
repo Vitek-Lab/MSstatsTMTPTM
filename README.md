@@ -5,6 +5,8 @@
 [![Codecov test coverage](https://codecov.io/gh/Vitek-Lab/MSstatsTMTPTM/branch/master/graph/badge.svg)](https://codecov.io/gh/Vitek-Lab/MSstatsTMTPTM?branch=master)
 <!-- badges: end -->
 
+The functionality of this package has now been built into MSstatsPTM: https://github.com/Vitek-Lab/MSstatsPTM
+
 MSstatsTMTPTM is an R-based package for detecting differencially abundant post translational modifications (PTM) in shotgun mass spectrometry-bsed proteomic experiments with tandem mass tag (TMT) labeling. 
 
 ## Installation 
